@@ -36,9 +36,10 @@ def p_demo(data):
         an = data['values']
         an = an[an['VAR'] == q]
         #RESPONSE MEANING
-        # TODO
-
-        ax = sns.boxplot(y = "Variable", x=q, data=date, orient="h")
+        date = date.merge(an, left_on=q, right_on='RESPONSE')
+        
+        ax = sns.boxplot(y="Variable", x=q, data=date, orient="h")
+        ax.set_xticklabels(date["MEANING"],rotation=60)
         ax.figure.savefig(d_path + sl + q + ".png")
         ax.figure.clf()
 
