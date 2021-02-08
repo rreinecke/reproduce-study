@@ -16,26 +16,19 @@ import os
 sl = os.path.sep
 
 
-####### Data Processing ########
+def process():
+    data = pd.read_csv(raw_data_path + sl + "data_test_plane.csv", sep=";")
+    val = pd.read_csv(raw_data_path + sl + "values_test.csv", sep=";", encoding = "ISO-8859-1")
+    var = pd.read_csv(raw_data_path + sl + "variables_test.csv", sep=";", encoding = "ISO-8859-1")
 
-data = pd.read_csv(raw_data_path + sl + "data_test_plane.csv", sep=";")
-val = pd.read_csv(raw_data_path + sl + "values_test.csv", sep=";", encoding = "ISO-8859-1")
-var = pd.read_csv(raw_data_path + sl + "variables_test.csv", sep=";", encoding = "ISO-8859-1")
+    # stripping away data that is not necessary for the plots and targeted analysis
+    if clean:
+        data.drop(['CASE', 'SERIAL', 'REF', 'MODE', 'STARTED', 'MAILSENT', 'LASTDATA', 'FINISHED', 'Q_VIEWER', 'LASTPAGE', 'MAXPAGE', 'MISSING', 'MISSREL', 'TIME_RSI'], axis=1)
 
-# stripping away data that is not necessary for the plots and targeted analysis
-if clean:
-    data.drop(['CASE', 'SERIAL', 'REF', 'MODE', 'STARTED', 'MAILSENT', 'LASTDATA', 'FINISHED', 'Q_VIEWER', 'LASTPAGE', 'MAXPAGE',
-       'MISSING', 'MISSREL', 'TIME_RSI'], axis=1)
-
-
-
-###### Write out ######
-
-if debug:
-    print(data.head)
-    print(val.head)
-    print(var.head)
-
+    if debug:
+        print(data.head)
+        print(val.head)
+        print(var.head)
 
 # TODO save as feather for plotting
 
