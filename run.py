@@ -5,7 +5,8 @@
 ### Runs the whole processing pipeline ###
 
 import process_data
+import plot_all
 
 if __name__ == '__main__':
    process_data.process()
-   # TODO plotting etc.
+   plot_all.all()

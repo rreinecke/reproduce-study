@@ -24,11 +24,23 @@ def process():
     # stripping away data that is not necessary for the plots and targeted analysis
     if clean:
         data.drop(['CASE', 'SERIAL', 'REF', 'MODE', 'STARTED', 'MAILSENT', 'LASTDATA', 'FINISHED', 'Q_VIEWER', 'LASTPAGE', 'MAXPAGE', 'MISSING', 'MISSREL', 'TIME_RSI'], axis=1)
-
+        var.drop(['TYPE', 'INPUT', 'QUESTION'], axis=1)
     if debug:
         print(data.head)
         print(val.head)
         print(var.head)
 
-# TODO save as feather for plotting
+    try:
+        os.mkdir("tmp")
+    except OSError as error:
+        if debug:
+            print("tmp already exists")
+
+    if debug:
+        print("Writing test data to temp frames ...")
+    data.to_feather("tmp" + sl + "__data.feather")
+    val.to_feather("tmp" + sl + "__val.feather")
+    var.to_feather("tmp" + sl + "__var.feather")
+
+process()
 
