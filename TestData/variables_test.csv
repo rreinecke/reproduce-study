@@ -1,0 +1,120 @@
+"VAR";"LABEL";"TYPE";"INPUT";"QUESTION"
+"CASE";"Interview-Nummer (fortlaufend)";"METRIC";"SYSTEM";
+"SERIAL";"Seriennummer (sofern verwendet)";"TEXT";"SYSTEM";
+"REF";"Referenz (sofern im Link angegeben)";"TEXT";"SYSTEM";
+"QUESTNNR";"Fragebogen, der im Interview verwendet wurde";"TEXT";"SYSTEM";
+"MODE";"Interview-Modus";"TEXT";"SYSTEM";
+"STARTED";"Zeitpunkt zu dem das Interview begonnen hat (Europe/Berlin)";"TIME";"SYSTEM";
+"DM01";"Career Stage";"NOMINAL";"SELECTION";"What career stage are you in?"
+"DM02_01";"Years of Experience:  ... years";"TEXT";"OPEN";"For how long have you been working in your research field?"
+"DM05";"scale";"NOMINAL";"SELECTION";"What geographic scale are you working on?"
+"DM06";"Field: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"To which field within the geosciences does your research mainly belong?"
+"DM06_01";"Field: Hydrology";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_02";"Field: Water Quality";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_03";"Field: Spatial Planning";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_04";"Field: Ecology";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_05";"Field: Soil Science";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_06";"Field: Geomorphology";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_07";"Field: Meteorology";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_08";"Field: Climate Studies";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_09";"Field: Environmental Sciences";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_10";"Field: Earth System Sciences";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"DM06_11";"Field: Other";"DICHOTOMOUS";"CHECKBOX";"To which field within the geosciences does your research mainly belong?"
+"O101_01";"Opinion: Most published science in my field is ((reproducible|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)).";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_02";"Opinion: In general, ((reproducibility|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)) is a major problem in my field.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_12";"Opinion: I believe that we are jeopardizing the trust in our results due to a lack of ((reproducibility|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)).";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_03";"Opinion: My own scientific work is ((reproducible|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)).";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_04";"Opinion: I am able to comprehend research code of other researchers in my field.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_16";"Opinion: I don't need to understand the code of other models; good documentation is sufficient for ((reproducibility|TODO defintion.)).";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_05";"Opinion: I would be able to teach practices and skills for ((reproducible|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)) science.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_15";"Opinion: I would like to make my scientific work more ((reproducible|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)), but I don?t have the resources.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_06";"Opinion: I would like to make my scientific work more ((reproducible|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).)), but I don't know how.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_07";"Opinion: I am able to write scientific code.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_08";"Opinion: I am able to write research code that is well structured and documented.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O101_17";"Opinion: Implementing an algorithm based on a description from a publication yourself is the same as using the exact software package/original code that was used in that very publication.";"ORDINAL";"SCALE";"How strongly do you agree with the following statements?"
+"O102_01";"Reproduce?: I ran somebody else's model in order to replicate and validate their exact results.";"ORDINAL";"SCALE";"Did you actively try to reproduce scientific results in the past? "
+"O102_02";"Reproduce?: I used my own model in order to reproduce similar results to somone else's model.";"ORDINAL";"SCALE";"Did you actively try to reproduce scientific results in the past? "
+"O103_01";"reasons: because their ((workflow|How the software is used, e.g., input format, configuration options, and example problems.)) is poorly documented.";"ORDINAL";"SCALE";"How strongly do you hold the listed reasons accountable for a lack of ((reproducibility| We explicitly<strong> exclude</strong> the retracing of results by means of using a <strong>different modeling environment</strong> (including variations in model concept, algorithms, input data or methodology).))?"
+"O103_02";"reasons: because their code is poorly documented.";"ORDINAL";"SCALE";"How strongly do you hold the listed reasons accountable for a lack of ((reproducibility| We explicitly<strong> exclude</strong> the retracing of results by means of using a <strong>different modeling environment</strong> (including variations in model concept, algorithms, input data or methodology).))?"
+"O103_03";"reasons: because their code is too complex.";"ORDINAL";"SCALE";"How strongly do you hold the listed reasons accountable for a lack of ((reproducibility| We explicitly<strong> exclude</strong> the retracing of results by means of using a <strong>different modeling environment</strong> (including variations in model concept, algorithms, input data or methodology).))?"
+"O103_04";"reasons: because their input data is not openly available.";"ORDINAL";"SCALE";"How strongly do you hold the listed reasons accountable for a lack of ((reproducibility| We explicitly<strong> exclude</strong> the retracing of results by means of using a <strong>different modeling environment</strong> (including variations in model concept, algorithms, input data or methodology).))?"
+"O103_05";"reasons: because the software/code is not openly available.";"ORDINAL";"SCALE";"How strongly do you hold the listed reasons accountable for a lack of ((reproducibility| We explicitly<strong> exclude</strong> the retracing of results by means of using a <strong>different modeling environment</strong> (including variations in model concept, algorithms, input data or methodology).))?"
+"O103_06";"reasons: because the code is written in a language that I wasn?t thought/don?t usually use.";"ORDINAL";"SCALE";"How strongly do you hold the listed reasons accountable for a lack of ((reproducibility| We explicitly<strong> exclude</strong> the retracing of results by means of using a <strong>different modeling environment</strong> (including variations in model concept, algorithms, input data or methodology).))?"
+"S101";"Programming Languages: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"What kind of programming languages do you mainly use?"
+"S101_01";"Programming Languages: Fortran";"DICHOTOMOUS";"CHECKBOX";"What kind of programming languages do you mainly use?"
+"S101_02";"Programming Languages: C/C++";"DICHOTOMOUS";"CHECKBOX";"What kind of programming languages do you mainly use?"
+"S101_03";"Programming Languages: Python";"DICHOTOMOUS";"CHECKBOX";"What kind of programming languages do you mainly use?"
+"S101_04";"Programming Languages: R";"DICHOTOMOUS";"CHECKBOX";"What kind of programming languages do you mainly use?"
+"S101_06";"Programming Languages: Others";"DICHOTOMOUS";"CHECKBOX";"What kind of programming languages do you mainly use?"
+"S103";"Coding frequency 1";"NOMINAL";"SELECTION";"How often do you use research software in your research practice?"
+"S110";"Coding frequency 2";"NOMINAL";"SELECTION";"How often do you develop code for research software in your research practice?"
+"S104";"Software Development Methods: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_01";"Software Development Methods: Pair programming";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_02";"Software Development Methods: Scrum";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_03";"Software Development Methods: Test-driven development";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_04";"Software Development Methods: Object-oriented programming";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_05";"Software Development Methods: Functional programming";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_07";"Software Development Methods: Software Design Patterns (such as Abstract factory or Decorator or similar)";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_08";"Software Development Methods: Automated Testing";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S104_09";"Software Development Methods: Other";"DICHOTOMOUS";"CHECKBOX";"Do you practice any of the following methods / concepts as part of your scientific coding routine?"
+"S105";"Software Development Tools: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"Do you use any of the following tools as part of your scientific coding routine?"
+"S105_01";"Software Development Tools: Version control such as Git, SVC or similar";"DICHOTOMOUS";"CHECKBOX";"Do you use any of the following tools as part of your scientific coding routine?"
+"S105_02";"Software Development Tools: IDEs such as Eclipse or similar";"DICHOTOMOUS";"CHECKBOX";"Do you use any of the following tools as part of your scientific coding routine?"
+"S105_03";"Software Development Tools: Automated documentation such as Docstrings or similar";"DICHOTOMOUS";"CHECKBOX";"Do you use any of the following tools as part of your scientific coding routine?"
+"S105_04";"Software Development Tools: Other tools";"DICHOTOMOUS";"CHECKBOX";"Do you use any of the following tools as part of your scientific coding routine?"
+"S105_04a";"Software Development Tools: Other tools (offene Eingabe)";"TEXT";"OPEN";"Do you use any of the following tools as part of your scientific coding routine?"
+"S111";"Licence";"NOMINAL";"SELECTION";"Which software licence(s) do you use for publishing your research software?"
+"S111s";"Licence (offene Eingabe)";"TEXT";"OPEN";"Which software licence(s) do you use for publishing your research software?"
+"S106";"Training methods: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"How did you learn to program software?"
+"S106_01";"Training methods: Computer Science degree";"DICHOTOMOUS";"CHECKBOX";"How did you learn to program software?"
+"S106_02";"Training methods: Courses during undergraduate studies (e.g., BA / Bsc)";"DICHOTOMOUS";"CHECKBOX";"How did you learn to program software?"
+"S106_03";"Training methods: Courses during postgraduate studies (e.g., MA / MSc / PhD)";"DICHOTOMOUS";"CHECKBOX";"How did you learn to program software?"
+"S106_04";"Training methods: Workshops";"DICHOTOMOUS";"CHECKBOX";"How did you learn to program software?"
+"S106_05";"Training methods: Online-courses";"DICHOTOMOUS";"CHECKBOX";"How did you learn to program software?"
+"S106_06";"Training methods: Self-taught /autodidact";"DICHOTOMOUS";"CHECKBOX";"How did you learn to program software?"
+"S112";"Licence2: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"With which of the following software licenses are you familiar with? "
+"S112_01";"Licence2: Apache License";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_02";"Licence2: BSD 3-Clause";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_03";"Licence2: FreeBSD";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_04";"Licence2: GNU General Public License (GPL)";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_05";"Licence2: MIT license";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_06";"Licence2: Mozilla Public License";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_07";"Licence2: Common Development and Distribution License";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S112_08";"Licence2: Other";"DICHOTOMOUS";"CHECKBOX";"With which of the following software licenses are you familiar with? "
+"S113";"NewStudent";"NOMINAL";"SELECTION";"How long do you think does it take for an average PhD student to efficiently work with your research software?"
+"S201_02";"Helpful Suggestions: Funding opportunities dedicated to reproduciblity (( |For example for a trained programmer to develop reuseable code and workflows.))";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S201_03";"Helpful Suggestions: Include code review as part of peer-review process";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S201_04";"Helpful Suggestions: Have my code internally reviewed (before manuscript submission)";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S201_06";"Helpful Suggestions: Reduce the complexity of code (( |For example through the application of established software engeneering concepts and a general improved code quality.))";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S201_09";"Helpful Suggestions: Reviewing source code of others myself";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S201_01";"Helpful Suggestions: University / institutional guidelines or best practices for reproducible research";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S201_10";"Helpful Suggestions: University / institutional guidelines or best practices for licensing and open source";"ORDINAL";"SCALE";"How helpful would you rate these actions to increase reproducibility?"
+"S202";"Ownership";"NOMINAL";"SELECTION";"Do you own your research software?"
+"S203";"Hurdles: Ausweichoption (negativ) oder Anzahl ausgewählter Optionen";"METRIC";"SYSTEM";"What keeps you from publishing your software as open source?"
+"S203_01";"Hurdles: Licence (too complex to understand which to pick or restricted by university/institution)";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_02";"Hurdles: Complexity (code too complex, not enough documentation)";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_03";"Hurdles: Competition (fear to lose lead on other groups)";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_04";"Hurdles: Technical ressources (e.g. storage)";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_08";"Hurdles: Staff resources";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_07";"Hurdles: Funding";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_05";"Hurdles: Time";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_06";"Hurdles: Other";"DICHOTOMOUS";"CHECKBOX";"What keeps you from publishing your software as open source?"
+"S203_06a";"Hurdles: Other (offene Eingabe)";"TEXT";"OPEN";"What keeps you from publishing your software as open source?"
+"S204_01";"Community: [01]";"TEXT";"OPEN";"What should we as  scientific community do to improve the reproducibility of our computational research?"
+"TIME001";"Verweildauer Seite 1";"METRIC";"SYSTEM";
+"TIME002";"Verweildauer Seite 2";"METRIC";"SYSTEM";
+"TIME003";"Verweildauer Seite 3";"METRIC";"SYSTEM";
+"TIME004";"Verweildauer Seite 4";"METRIC";"SYSTEM";
+"TIME005";"Verweildauer Seite 5";"METRIC";"SYSTEM";
+"TIME006";"Verweildauer Seite 6";"METRIC";"SYSTEM";
+"TIME_SUM";"Verweildauer gesamt (ohne Ausreißer)";"METRIC";"SYSTEM";
+"MAILSENT";"Versandzeitpunkt der Einladungsmail (nur für nicht-anonyme Adressaten)";"TIME";"SYSTEM";
+"LASTDATA";"Zeitpunkt als der Datensatz das letzte mal geändert wurde";"TIME";"SYSTEM";
+"FINISHED";"Wurde die Befragung abgeschlossen (letzte Seite erreicht)?";"BOOL";"SYSTEM";
+"Q_VIEWER";"Hat der Teilnehmer den Fragebogen nur angesehen, ohne die Pflichtfragen zu beantworten?";"BOOL";"SYSTEM";
+"LASTPAGE";"Seite, die der Teilnehmer zuletzt bearbeitet hat";"METRIC";"SYSTEM";
+"MAXPAGE";"Letzte Seite, die im Fragebogen bearbeitet wurde";"METRIC";"SYSTEM";
+"MISSING";"Anteil fehlender Antworten in Prozent";"METRIC";"SYSTEM";
+"MISSREL";"Anteil fehlender Antworten (gewichtet nach Relevanz)";"METRIC";"SYSTEM";
+"TIME_RSI";"Maluspunkte für schnelles Ausfüllen";"METRIC";"SYSTEM";
+"DEG_TIME";"Maluspunkte für schnelles Ausfüllen";"METRIC";"SYSTEM";
