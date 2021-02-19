@@ -41,6 +41,7 @@ def process():
     data.to_feather("tmp" + sl + "__data.feather")
     val.to_feather("tmp" + sl + "__val.feather")
     var.to_feather("tmp" + sl + "__var.feather")
+    return data, val, var
 
 process()
 
