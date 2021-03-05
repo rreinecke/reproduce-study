@@ -3,7 +3,7 @@ Reads in raw data and processes it to a pandas data-frame for plotting and evalu
 '''
 
 # Where to read the data from
-raw_data_path = "TestData"
+raw_data_path = "LiveData"
 # Strip unnecessary variables
 clean = True
 # Print summary to console?
@@ -17,9 +17,9 @@ sl = os.path.sep
 
 
 def process():
-    data = pd.read_csv(raw_data_path + sl + "data_test_plane.csv", sep=";")
-    val = pd.read_csv(raw_data_path + sl + "values_test.csv", sep=";", encoding = "ISO-8859-1")
-    var = pd.read_csv(raw_data_path + sl + "variables_test.csv", sep=";", encoding = "ISO-8859-1")
+    data = pd.read_csv(raw_data_path + sl + "data.csv", sep=";")
+    val = pd.read_csv(raw_data_path + sl + "values.csv", sep=";", encoding = "ISO-8859-1")
+    var = pd.read_csv(raw_data_path + sl + "variables.csv", sep=";", encoding = "ISO-8859-1")
 
     # stripping away data that is not necessary for the plots and targeted analysis
     if clean:
