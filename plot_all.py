@@ -42,6 +42,19 @@ def get_label(data, question, n, toremove):
         d[i] = name
     return d
 
+def get_label_by_names(data, qs, toremove):
+    '''
+    Returns a dict that maps answer codes to answers
+    ''' 
+    an = data['variables']
+    #iterate questions
+    d = {}
+    for q in qs:
+        name = an[an['VAR'] == q]["LABEL"].to_string(index=False)
+        name = name.replace(toremove,'')
+        d[q] = name
+    return d
+
 
 def p_demo(data):
     '''
@@ -107,8 +120,13 @@ def p_opinion(data):
         d.reset_index(level=0, inplace=True) 
         df = pd.melt(d, id_vars=['index'], value_vars=cols)
 
+        res = get_label_by_names(data, cols,' Opinion:')     
+        df["variable"] = df["variable"].map(res)
+
         ax = sns.boxplot(y="variable", x="value", data=df, orient="h")
-        #ax.set_xticklabels(date["MEANING"],rotation=60)
+
+        plt.subplots_adjust(left=.5)
+        #plt.yticks(fontsize = 5)
         ax.figure.savefig(d_path + sl + q + ".png", dpi=150)
         ax.figure.clf()
 
