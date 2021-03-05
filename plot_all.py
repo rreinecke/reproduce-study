@@ -1,6 +1,7 @@
 import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 import os
 sl = os.path.sep
@@ -26,14 +27,28 @@ def get_full_response(data, question):
     an = an[an['VAR'] == question].sort_values(by='RESPONSE')
     return dict(zip(an['RESPONSE'], an['MEANING']))
 
+def get_label(data, question, n, toremove):
+    '''
+    Returns a dict that maps answer codes to answers
+    n: number of fields
+    ''' 
+    an = data['variables']
+    ran = np.arange(1,n+1)
+    d = {}
+    for i in ran:
+        # there is probably an easier way to accieve this
+        name = an[an['VAR'] == (question + '_0' + str(i))]["LABEL"].to_string(index=False)
+        name = name.replace(toremove,'')
+        d[i] = name
+    return d
+
 
 def p_demo(data):
     '''
     Plot Demographics
     '''
-
-    # FIXME Y DM02_01 ?
-    names = {'DM01':"Career stage",'DM02_01':"Experience",'DM05':"Field of research",'DM06':"Scale"}   
+    #03 was the defintion that was removed, 04 does not exist
+    names = {'DM01':"Career stage",'DM02_01':"Experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Task"}
 
     d = data['data'][names.keys()]
     #iterate questions of catergory and plot for each
@@ -42,10 +57,20 @@ def p_demo(data):
 
         # What should the axis say?
         date.columns = [names[q]]
-        
+
         # Get the full answer text instead of only a number
-        res = get_full_response(data,q)
-        date[names[q]] = date[names[q]].map(res)
+        if q not in ["DM02_01","DM06", "DM07"]:
+            res = get_full_response(data, q)
+            date[names[q]] = date[names[q]].map(res)
+
+        # DM06 and DM07 have labels instead
+        if q == "DM06":
+            res = get_label(data, q, 11, " Field:")
+            date[names[q]] = date[names[q]].map(res)
+        #if q == "DM07":
+        #FIXME not compatible with histplot -> also to long for a plot
+        #    res = get_label(data, q, 5, " KindOfTask:")
+        #    date[names[q]] = date[names[q]].map(res)
 
         ax = sns.histplot(x=names[q], data=date, discrete=True)
         plt.xticks(rotation=90, fontsize =5)
