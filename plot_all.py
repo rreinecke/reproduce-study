@@ -79,32 +79,37 @@ def p_demo(data):
         ax.figure.savefig(d_path + sl + q + ".png", dpi=150)
         ax.figure.clf()
 
+def get_all_data(data, q):
+    '''
+    Collects data from multiple field questions like O101
+    '''
+    
+    date = data['data']
+    # find out what fields exist
+    col = date.columns.to_list()
+    r = [i for i in col if q in i]
+    
+    return date[r], r 
+
+
+
 def p_opinion(data):
     '''
     Plot Opinions
     '''
 
-    # TODO answers are _X but without logical order
-    #"O101_01";"O101_02";"O101_12";"O101_03";"O101_04";"O101_16";"O101_05";"O101_15";"O101_06";"O101_07";"O101_08";"O101_17";
+    names = {'O101':"Agreement",'O102':"Reproduce?",'O103':"Reasons"}   
     
-    names = {'O102':"Reproduce?",'O101':"Agreement",'O103':"Reasons"}   
-
-    d = data['data'][names.keys()]
-    #iterate questions of catergory and plot box for each
+    #iterate questions of catergory and ploti box for each
     for q in names.keys():
-        date = d[q].copy().to_frame()
-        # What should the Y-axis say?
-        date["Variable"] = names[q]
-        
-        # Get the full answer text
-        an = data['values']
-        an = an[an['VAR'] == q]
-        #RESPONSE MEANING
-        date = date.merge(an, left_on=q, right_on='RESPONSE')
-        
-        ax = sns.boxplot(y="Variable", x=q, data=date, orient="h")
-        ax.set_xticklabels(date["MEANING"],rotation=60)
-        ax.figure.savefig(d_path + sl + q + ".png")
+        d, cols = get_all_data(data, q)
+        # frame with O101_01 etc. as col and data as row
+        d.reset_index(level=0, inplace=True) 
+        df = pd.melt(d, id_vars=['index'], value_vars=cols)
+
+        ax = sns.boxplot(y="variable", x="value", data=df, orient="h")
+        #ax.set_xticklabels(date["MEANING"],rotation=60)
+        ax.figure.savefig(d_path + sl + q + ".png", dpi=150)
         ax.figure.clf()
 
 def p_self(data):
@@ -134,9 +139,8 @@ def p_self(data):
 
 def all():
     data = read_data()
-    p_demo(data)
-    #TODO implement
-    #p_opinion(data)
+    #p_demo(data)
+    p_opinion(data)
     #p_self(data)
 
 all()
