@@ -13,6 +13,9 @@ try:
 except OSError as error:
     pass
 
+# We are reading some very long string but still want to display them fully in all plots
+pd.set_option('display.max_colwidth', None) 
+
 def read_data():
     df_d = pd.read_feather("tmp" + sl + "__data.feather") 
     df_val = pd.read_feather("tmp" + sl + "__val.feather") 
@@ -51,7 +54,11 @@ def get_label_by_names(data, qs, toremove):
     d = {}
     for q in qs:
         name = an[an['VAR'] == q]["LABEL"].to_string(index=False)
-        name = name.replace(toremove,'')
+        if isinstance(toremove, list):
+            for rem in toremove:
+                name = name.replace(rem,'')
+        else:
+            name = name.replace(toremove,'')
         d[q] = name
     return d
 
@@ -104,7 +111,10 @@ def get_all_data(data, q):
     
     return date[r], r 
 
-
+explenation_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
+explenation_a_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
+expl_missing_s = "|TODO defintion.))" 
+expl_soft_s = "|How the software is used, e.g., input format, configuration options, and example problems.))"
 
 def p_opinion(data):
     '''
@@ -113,21 +123,37 @@ def p_opinion(data):
 
     names = {'O101':"Agreement",'O102':"Reproduce?",'O103':"Reasons"}   
     
-    #iterate questions of catergory and ploti box for each
+    #iterate questions of catergory and plot box for each
     for q in names.keys():
         d, cols = get_all_data(data, q)
+
         # frame with O101_01 etc. as col and data as row
         d.reset_index(level=0, inplace=True) 
         df = pd.melt(d, id_vars=['index'], value_vars=cols)
 
-        res = get_label_by_names(data, cols,' Opinion:')     
+        res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "((", explenation_s, explenation_a_s, expl_missing_s, expl_soft_s])
         df["variable"] = df["variable"].map(res)
 
+
+        if q == "O102": 
+            plt.figure(figsize=(12,4))
+            plt.yticks(fontsize = 8)
+            df["Answer"] = df["value"].map({1:"Yes", 2:"No"})
+            ax = sns.histplot(y="variable", hue="Answer", data=df, discrete=True, multiple="stack", shrink=.8)
+            plt.subplots_adjust(left=.5)
+            ax.set(ylabel='')
+            ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
+            ax.figure.clf()
+            continue
+
+        plt.figure(figsize=(12,4))
         ax = sns.boxplot(y="variable", x="value", data=df, orient="h")
 
-        plt.subplots_adjust(left=.5)
-        #plt.yticks(fontsize = 5)
-        ax.figure.savefig(d_path + sl + q + ".png", dpi=150)
+        plt.subplots_adjust(left=.6)
+        plt.yticks(fontsize = 7)
+        ax.set(xlabel='Disagree ↔ Agree', ylabel='')
+        plt.tight_layout()
+        ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
 
 def p_self(data):
@@ -157,7 +183,7 @@ def p_self(data):
 
 def all():
     data = read_data()
-    #p_demo(data)
+    p_demo(data)
     p_opinion(data)
     #p_self(data)
 
