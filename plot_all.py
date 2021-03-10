@@ -263,9 +263,9 @@ def p_self2(data):
 
 def all():
     data = read_data()
-    #p_demo(data)
-    #p_opinion(data)
-    #p_self(data)
+    p_demo(data)
+    p_opinion(data)
+    p_self(data)
     p_self2(data)
 
 all()
