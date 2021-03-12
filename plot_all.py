@@ -68,7 +68,7 @@ def p_demo(data):
     Plot Demographics
     '''
     #03 was the defintion that was removed, 04 does not exist
-    names = {'DM01':"Career stage",'DM02_01':"Experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Task"}
+    names = {'DM01':"Career stage",'DM02_01':"Years of experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Task"}
 
     d = data['data'][names.keys()]
     #iterate questions of catergory and plot for each
@@ -92,11 +92,13 @@ def p_demo(data):
         #    res = get_label(data, q, 5, " KindOfTask:")
         #    date[names[q]] = date[names[q]].map(res)
 
-        ax = sns.histplot(x=names[q], data=date, discrete=True)
-        plt.xticks(rotation=90, fontsize =5)
+        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False)
+
+        sns.despine(trim=True, offset=2);
+        plt.xticks(rotation=-45, fontsize = 6, ha="left", rotation_mode="anchor")
         plt.subplots_adjust(bottom=.4)
 
-        ax.figure.savefig(d_path + sl + q + ".png", dpi=150)
+        ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
 
 def get_all_data(data, q):
