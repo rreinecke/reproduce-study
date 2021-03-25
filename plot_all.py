@@ -82,6 +82,10 @@ def p_demo(data):
         if q not in ["DM02_01","DM06", "DM07"]:
             res = get_full_response(data, q)
             date[names[q]] = date[names[q]].map(res)
+            if q == "DM01":
+                # manual shorten some names -> too long to plot them properly
+                date.loc[date[names[q]] == "Student (undergraduate, Bachelor/Master or similar)"] = "Student (BA/MA)"
+                date.loc[date[names[q]] == "Group leader / junior professor"] = "Group leader"
 
         # DM06 and DM07 have labels instead
         if q == "DM06":
@@ -92,11 +96,21 @@ def p_demo(data):
         #    res = get_label(data, q, 5, " KindOfTask:")
         #    date[names[q]] = date[names[q]].map(res)
 
-        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False)
+        if q == "DM05":
+            '''
+            Histplot does not support a categorial ordering.
+            For some plots we might want to adjust the automatic ordering to make sence.
+            '''
+            t = pd.CategoricalDtype(categories=['Global', 'Continental', '< Million km²', '< 1000 km²', '< km²', '< m²', '< cm²', 'Mixed', 'Does not apply to me'], ordered=True)
+            date['sort'] = pd.Series(date[names[q]], dtype=t)
+            date.sort_values(by=['sort'],inplace=True)
+        
+        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="probability")
 
         sns.despine(trim=True, offset=2);
-        plt.xticks(rotation=-45, fontsize = 6, ha="left", rotation_mode="anchor")
-        plt.subplots_adjust(bottom=.4)
+        plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor")
+        plt.subplots_adjust(bottom=.3)
+        #ax.set_ylabel("")
 
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
@@ -176,10 +190,9 @@ def p_self(data):
         res = get_full_response(data, q)
         d[q] = d[q].map(res)
 
-        ax = sns.histplot(x=q, data=d, discrete=True)
-        plt.xticks(rotation=90, fontsize =5)
-        plt.subplots_adjust(bottom=.4)
-
+        ax = sns.histplot(x=q, data=d, discrete=True, fill=False, stat="probability")
+        sns.despine(trim=True, offset=2);
+        plt.xticks(rotation=-45, fontsize = 6, ha="left", rotation_mode="anchor")
 
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
