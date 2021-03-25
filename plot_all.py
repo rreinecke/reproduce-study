@@ -190,10 +190,25 @@ def p_self(data):
         res = get_full_response(data, q)
         d[q] = d[q].map(res)
 
+
+        plt.figure(figsize=(5,4))
+        
+        if q == "S202":
+                # manual shorten some names -> too long to plot them properly
+                d.loc[d[q] == "No, all code belongs to the institution I work for"] = "Institute"
+                d.loc[d[q] == "No, all code belongs to supervisor"] = "Supervisor"
+                d.loc[d[q] == "Don't actually know"] = "I don't know"
+                d.loc[d[q] == "Yes, all code belongs to me"] = "Me"
+
         ax = sns.histplot(x=q, data=d, discrete=True, fill=False, stat="probability")
         sns.despine(trim=True, offset=2);
-        plt.xticks(rotation=-45, fontsize = 6, ha="left", rotation_mode="anchor")
+        plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
+        plt.subplots_adjust(bottom=.2)
+       
+        if q == "S202":
+            ax.set_xlabel("Who owns the research code?")
 
+        plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
 
