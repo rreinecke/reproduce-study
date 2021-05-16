@@ -2,12 +2,21 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-
 import os
 sl = os.path.sep
 
+'''
+Copyright Robert Reinecke
+
+This scripts plots all figures and data shown in a scientific publication.
+The first half is a collection of helper functions that are used to process the very diverse data.
+'''
+
+
+# Where should the figure be plotted relative to the script?
 d_path= "figs" 
 
+# Create a folder if it doesn't exist already
 try:
     os.mkdir(d_path)
 except OSError as error:
@@ -17,6 +26,11 @@ except OSError as error:
 pd.set_option('display.max_colwidth', None) 
 
 def read_data():
+    '''
+    Reads the preprocessed data from temprory feather files.
+    Assumes that pre-processing was applied.
+    @return a dicts that stores the 3 data fields that sociy provides
+    '''
     df_d = pd.read_feather("tmp" + sl + "__data.feather") 
     df_val = pd.read_feather("tmp" + sl + "__val.feather") 
     df_var = pd.read_feather("tmp" + sl + "__var.feather")
@@ -68,7 +82,7 @@ def p_demo(data):
     Plot Demographics
     '''
     #03 was the defintion that was removed, 04 does not exist
-    names = {'DM01':"Career stage",'DM02_01':"Years of experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Task"}
+    names = {'DM01':"Career stage",'DM02_01':"Years of experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Main work task"}
 
     d = data['data'][names.keys()]
     #iterate questions of catergory and plot for each
@@ -91,15 +105,22 @@ def p_demo(data):
         if q == "DM06":
             res = get_label(data, q, 11, " Field:")
             date[names[q]] = date[names[q]].map(res)
-        #if q == "DM07":
-        #FIXME not compatible with histplot -> also to long for a plot
-        #    res = get_label(data, q, 5, " KindOfTask:")
-        #    date[names[q]] = date[names[q]].map(res)
+        if q == "DM07":
+            res = get_label(data, q, 5, " KindOfTask:")
+            date[names[q]] = date[names[q]].map(res)
+            # shorten answers -> too long to plot properly
+            date.loc[date[names[q]] == " KindOfTasks: I conduct research that improves our process understanding by conducting field or lab experiments."] = "Field/Lab work"
+            date.loc[date[names[q]] == " KindOfTasks: I conduct research by developing and using computational models."] = "Develope and apply models"
+            date.loc[date[names[q]] == " KindOfTasks: I conduct research by applying computational models without building them myself."] = "Apply models"
+            date.loc[date[names[q]] == " KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
+            # No answer for " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
+            # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
+            date[names[q]].dropna(inplace=True) 
 
         if q == "DM05":
             '''
             Histplot does not support a categorial ordering.
-            For some plots we might want to adjust the automatic ordering to make sence.
+            For some plots we might want to adjust the automatic ordering to make sense.
             '''
             t = pd.CategoricalDtype(categories=['Global', 'Continental', '< Million km²', '< 1000 km²', '< km²', '< m²', '< cm²', 'Mixed', 'Does not apply to me'], ordered=True)
             date['sort'] = pd.Series(date[names[q]], dtype=t)
@@ -174,40 +195,61 @@ def p_opinion(data):
 
 def p_self(data):
     '''
-    Plot Self-assemssment
+    Plot Self-assesments
     '''
 
-    names = {'S103': "Frequence Software", 'S110': "Frequence coding", 'S202': 'Ownership', 'S113': "New student", 'S204': "Community - Full text answer"} 
+    names = {'S103': "Usage of research software", 'S110': "Frequence of research code development", 'S202': 'Ownership of code', 'S113': "Time to train a new student", 'S204': "Community - Full text answer"} 
     
     #iterate questions of catergory and plot box for each
     for q in names.keys():
         d, cols = get_all_data(data, q)
 
         if q == "S204":
+            #just write all the answers to one csv for further processing.
             d.to_csv("S204_answers.csv", index=False)
             continue
 
         res = get_full_response(data, q)
         d[q] = d[q].map(res)
 
-
+        #reset figure size
         plt.figure(figsize=(5,4))
-        
+    
+
+        # manual shorten some names -> too long to plot them properly
         if q == "S202":
-                # manual shorten some names -> too long to plot them properly
-                d.loc[d[q] == "No, all code belongs to the institution I work for"] = "Institute"
-                d.loc[d[q] == "No, all code belongs to supervisor"] = "Supervisor"
-                d.loc[d[q] == "Don't actually know"] = "I don't know"
-                d.loc[d[q] == "Yes, all code belongs to me"] = "Me"
+            d.loc[d[q] == "No, all code belongs to the institution I work for"] = "Institute"
+            d.loc[d[q] == "No, all code belongs to supervisor"] = "Supervisor"
+            d.loc[d[q] == "Don't actually know"] = "I don't know"
+            d.loc[d[q] == "Yes, all code belongs to me"] = "Me"
+
+
+        '''
+        Histplot does not support a categorial ordering.
+        For some plots we might want to adjust the automatic ordering to make sense.
+        Should be made more generic -> currently code repetition
+        '''
+        if q == "S103":
+            t = pd.CategoricalDtype(categories=['Every day', 'Multiple times per week', 'Once a week', 'Once a month', 'Less than once a month', 'I do not use research software in my own research.'], ordered=True)
+            d['sort'] = pd.Series(d[q], dtype=t)
+            d.sort_values(by=['sort'],inplace=True)
+        if q == "S110":
+            t = pd.CategoricalDtype(categories=['Every day', 'Multiple times per week', 'Once a week', 'Once a month', 'Less than once a month', 'I used to develop software in the past but not anymore.', 'I do not work on code at all.'], ordered=True)
+            d['sort'] = pd.Series(d[q], dtype=t)
+            d.sort_values(by=['sort'],inplace=True)
+        if q == "S113":
+            t = pd.CategoricalDtype(categories=['1 day', '1 week', '2-4 weeks', 'up to a year', 'more than a year', 'Does not apply to me'], ordered=True)
+            d['sort'] = pd.Series(d[q], dtype=t)
+            d.sort_values(by=['sort'],inplace=True) 
+
 
         ax = sns.histplot(x=q, data=d, discrete=True, fill=False, stat="probability")
         sns.despine(trim=True, offset=2);
         plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
         plt.subplots_adjust(bottom=.2)
        
-        if q == "S202":
-            ax.set_xlabel("Who owns the research code?")
-
+        ax.set_xlabel(names[q])
+        
         plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
