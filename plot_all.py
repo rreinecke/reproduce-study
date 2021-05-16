@@ -340,4 +340,4 @@ def all():
     p_self(data)
     p_self2(data)
 
-all()
+#all()

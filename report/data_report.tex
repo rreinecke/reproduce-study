@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University/School Laboratory Report
+% LaTeX Template
+% Version 3.1 (25/3/14)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Linux and Unix Users Group at Virginia Tech Wiki 
+% (https://vtluug.org/wiki/Example_LaTeX_chem_lab_report)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\usepackage[version=3]{mhchem} % Package for chemical equation typesetting
+\usepackage{siunitx} % Provides the \SI{}{} and \si{} command for typesetting SI units
+\usepackage{graphicx} % Required for the inclusion of images
+\usepackage{natbib} % Required to change bibliography style to APA
+\usepackage{amsmath} % Required for some math elements 
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs
+
+\renewcommand{\labelenumi}{\alph{enumi}.} % Make numbering in the enumerate environment by letter rather than number (e.g. section 6)
+
+%\usepackage{times} % Uncomment to use the Times New Roman font
+
+%----------------------------------------------------------------------------------------
+%	DOCUMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+\title{REMODEL- A Community Poll on Reproducibility in Computational Geosciences} % Title
+
+\author{Robert \textsc{Reinecke}} % Author name
+
+\date{\today} % Date for the report
+
+\begin{document}
+
+\maketitle % Insert the title, author and date
+
+\begin{center}
+\begin{tabular}{l r}
+Date: & XXXX, XXXX \\ % Date
+\end{tabular}
+\end{center}
+
+This document summerizes a full analysis for detailed results.
+
+It summarizes the extensive results and builds the foundation for the publication of a journal paper.
+It will also be distributed along with the data in the course of a journal and data publication.
+
+\section{AIM OF THIS SURVEY}
+
+Software development has become an integral part of the geosciences¹ as models and data processing get more sophisticated. Paradoxically, it poses a threat to scientific progress as the pillar of science, reproducibility, is seldomly reached². Software code tends to be either poorly written and documented or not shared at all; proper software licenses are rarely attributed. This is especially worrisome as scientific results have potential controversial implications for stakeholders and policymakers and may influence the public opinion for a long time³.
+
+In recent years, progress towards open science has led to more publishers demanding access to data and source code alongside peer-reviewed manuscripts4,5. Still, recent studies find that results can rarely be reproduced6,7.
+
+In this project, we conduct a poll among the geoscience community which is advertised via scientific blogs (AGU, EGU), research networks (researchgate.net and mailing lists), and social media. Therein, we strive to investigate the causes for that lack of reproducibility. We take a peek behind the curtain and unveil how the community develops and maintains complex code and what that entails for reproducibility8. Our survey includes background knowledge, community opinion, and behaviour practices regarding reproducible software development.
+
+We postulate that this lack of reproducibility9 might be rooted in insufficient reward within the scientific community, insecurity regarding proper licencing of software and other parts of the research compendium as well as scientists’ unawareness about how to make software available in a way that allows for proper attribution of their work. We question putative causes such as unclear guidelines of research institutions or that software has been developed over decades10, by researchers' cohorts without a proper software engineering process¹ and transparent licensing.
+
+To this end, we also summarize solutions like the adaption of modern project management methods from the computer engineering community11 that will eventually reduce costs while increasing the reproducibility of scientific research8.
+
+¹ A comment to "Most Computational Hydrology is not Reproducible, so is it Really Science?” R.W. Hut, N.C. van de Giesen, N. Drost, Water Resources Research, 2017
+
+² Hutton, C., Wagener, T., Freer, J., Han, D., Du\_y, C., and Arheimer, B., Most computational hydrology is not reproducible, so is it really science? Water Resources Research, 2016
+
+³ Munafò, M., Nosek, B., Bishop, D. et al., A manifesto for reproducible science. Nat Hum Behav, 2017
+
+4 Executive editors, G. Editorial: The publication of geoscientifc model developments v1.2. Geoscientifc Model Development, 2019
+
+5 Katz, D. S., Niemeyer, K. E., and Smith, A. M., Publish your software: Introducing the journal of open source software (joss), Computing in Science Engineering, 2018
+
+6 Stagge, J. H., Rosenberg, D. E., Abdallah, A. M., Akbar, H., Attallah, N. A., and James, R., Assessing data availability and research reproducibility in hydrology and water resources. Scientific data, 2019
+
+7 Añel, J. A., García-Rodríguez, M., and Rodeiro, J.: Current status on the need for improved accessibility to climate models code, Geosci. Model Dev., 2021.
+
+8 Stodden, V., The reproducible research standard: Reducing legal barriers to scientific knowledge and innovation. IEEE Computing in Science \& Engineering, 2009
+
+9 https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970
+
+10 Muller, C., Schaphoff, S., von Bloh, W., Thonicke, K., and Gerten, D., Going open-source with a model dinosaur and establishing model evaluation standards. EGU, 2018
+
+11 https://software.rajivprab.com/2019/11/25/the-birth-of-legacy-software-how-change-aversion-feeds-on-itself
+Our larger questions:
+
+    Is eproducibility is an issue in the geosciences? Are bad code and documentation the root cause of that issue?
+
+    Is model software too complex? Does that hinder reproducibility?
+
+    Are researchers missing the tools and know-how (methods, licenses etc.) to build good model code?
+
+    Is missing funding and missing time preventing researchers from making their models more accessible?
+
+We define reproducibility as:
+
+"Reproducibility in the context of modeling in the geosciences means that results obtained by a modeling experiment should be achieved again with a high degree of agreement when the study is replicated with the same model design, inputs, and general methodology by different researchers.
+
+We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology)."
+
+\section{DATA PROCESSING AND ANALYSIS}
+
+We designed the survey according to standards from psychology research. We apply descriptive statistics to analyse demographic background and basic analysis.
+Further, we apply inferential statistical methods to test the unerlying hypotheses.
+
+\section{RESULTS}
+TODO add original structure from Katja here
+
+\end{document}
