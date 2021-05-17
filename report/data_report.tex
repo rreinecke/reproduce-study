@@ -88,37 +88,36 @@ It summarizes the extensive results and builds the foundation for the publicatio
 It will also be distributed along with the data in the course of a journal and data publication.
 
 \section{Aim of this survey}
-Software development has become an integral part of the geosciences¹ as models and data processing get more sophisticated. Paradoxically, it poses a threat to scientific progress as the pillar of science, reproducibility, is seldomly reached². Software code tends to be either poorly written and documented or not shared at all; proper software licenses are rarely attributed. This is especially worrisome as scientific results have potential controversial implications for stakeholders and policymakers and may influence the public opinion for a long time³.
+Software development has become an integral part of the geosciences$^{1}$ as models and data processing get more sophisticated.
+Paradoxically, it poses a threat to scientific progress as the pillar of science, reproducibility, is seldomly reached$^{2}$.
+Software code tends to be either poorly written and documented or not shared at all; proper software licenses are rarely attributed.
+This is especially worrisome as scientific results have potential controversial implications for stakeholders and policymakers and may influence the public opinion for a long time$^{3}$.
 
-In recent years, progress towards open science has led to more publishers demanding access to data and source code alongside peer-reviewed manuscripts4,5. Still, recent studies find that results can rarely be reproduced6,7.
+In recent years, progress towards open science has led to more publishers demanding access to data and source code alongside peer-reviewed manuscripts4,5. Still, recent studies find that results can rarely be reproduced $^{6,7}$.
 
-In this project, we conduct a poll among the geoscience community which is advertised via scientific blogs (AGU, EGU), research networks (researchgate.net and mailing lists), and social media. Therein, we strive to investigate the causes for that lack of reproducibility. We take a peek behind the curtain and unveil how the community develops and maintains complex code and what that entails for reproducibility8. Our survey includes background knowledge, community opinion, and behaviour practices regarding reproducible software development.
+In this project, we conduct a poll among the geoscience community which is advertised via scientific blogs (AGU, EGU), research networks (researchgate.net and mailing lists), and social media.
+Therein, we strive to investigate the causes for that lack of reproducibility.
+We take a peek behind the curtain and unveil how the community develops and maintains complex code and what that entails for reproducibility$^{8}$ .
+Our survey includes background knowledge, community opinion, and behaviour practices regarding reproducible software development.
 
-We postulate that this lack of reproducibility9 might be rooted in insufficient reward within the scientific community, insecurity regarding proper licencing of software and other parts of the research compendium as well as scientists’ unawareness about how to make software available in a way that allows for proper attribution of their work. We question putative causes such as unclear guidelines of research institutions or that software has been developed over decades10, by researchers' cohorts without a proper software engineering process¹ and transparent licensing.
+We postulate that this lack of reproducibility$^{9}$  might be rooted in insufficient reward within the scientific community, insecurity regarding proper licencing of software and other parts of the research compendium as well as scientists’ unawareness about how to make software available in a way that allows for proper attribution of their work.
+We question putative causes such as unclear guidelines of research institutions or that software has been developed over decades$^{10}$ , by researchers' cohorts without a proper software engineering process¹ and transparent licensing.
 
-To this end, we also summarize solutions like the adaption of modern project management methods from the computer engineering community11 that will eventually reduce costs while increasing the reproducibility of scientific research8.
+To this end, we also summarize solutions like the adaption of modern project management methods from the computer engineering community$^{11}$  that will eventually reduce costs while increasing the reproducibility of scientific research$^{8}$ .
 
-1 A comment to "Most Computational Hydrology is not Reproducible, so is it Really Science?” R.W. Hut, N.C. van de Giesen, N. Drost, Water Resources Research, 2017
+1 A comment to "Most Computational Hydrology is not Reproducible, so is it Really Science?” R.W. Hut, N.C. van de Giesen, N. Drost, Water Resources Research, 2017\\
+2 Hutton, C., Wagener, T., Freer, J., Han, D., Du\_y, C., and Arheimer, B., Most computational hydrology is not reproducible, so is it really science? Water Resources Research, 2016\\
+3 Munafò, M., Nosek, B., Bishop, D. et al., A manifesto for reproducible science. Nat Hum Behav, 2017\\
+4 Executive editors, G. Editorial: The publication of geoscientifc model developments v1.2. Geoscientifc Model Development, 2019\\
+5 Katz, D. S., Niemeyer, K. E., and Smith, A. M., Publish your software: Introducing the journal of open source software (joss), Computing in Science Engineering, 2018\\
+6 Stagge, J. H., Rosenberg, D. E., Abdallah, A. M., Akbar, H., Attallah, N. A., and James, R., Assessing data availability and research reproducibility in hydrology and water resources. Scientific data, 2019\\
+7 Añel, J. A., García-Rodríguez, M., and Rodeiro, J.: Current status on the need for improved accessibility to climate models code, Geosci. Model Dev., 2021\\
+8 Stodden, V., The reproducible research standard: Reducing legal barriers to scientific knowledge and innovation. IEEE Computing in Science \& Engineering, 2009\\
+9 https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970\\
+10 Muller, C., Schaphoff, S., von Bloh, W., Thonicke, K., and Gerten, D., Going open-source with a model dinosaur and establishing model evaluation standards. EGU, 2018\\
+11 https://software.rajivprab.com/2019/11/25/the-birth-of-legacy-software-how-change-aversion-feeds-on-itself\\
 
-2 Hutton, C., Wagener, T., Freer, J., Han, D., Du\_y, C., and Arheimer, B., Most computational hydrology is not reproducible, so is it really science? Water Resources Research, 2016
 
-3 Munafò, M., Nosek, B., Bishop, D. et al., A manifesto for reproducible science. Nat Hum Behav, 2017
-
-4 Executive editors, G. Editorial: The publication of geoscientifc model developments v1.2. Geoscientifc Model Development, 2019
-
-5 Katz, D. S., Niemeyer, K. E., and Smith, A. M., Publish your software: Introducing the journal of open source software (joss), Computing in Science Engineering, 2018
-
-6 Stagge, J. H., Rosenberg, D. E., Abdallah, A. M., Akbar, H., Attallah, N. A., and James, R., Assessing data availability and research reproducibility in hydrology and water resources. Scientific data, 2019
-
-7 Añel, J. A., García-Rodríguez, M., and Rodeiro, J.: Current status on the need for improved accessibility to climate models code, Geosci. Model Dev., 2021.
-
-8 Stodden, V., The reproducible research standard: Reducing legal barriers to scientific knowledge and innovation. IEEE Computing in Science \& Engineering, 2009
-
-9 https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970
-
-10 Muller, C., Schaphoff, S., von Bloh, W., Thonicke, K., and Gerten, D., Going open-source with a model dinosaur and establishing model evaluation standards. EGU, 2018
-
-11 https://software.rajivprab.com/2019/11/25/the-birth-of-legacy-software-how-change-aversion-feeds-on-itself
 Our larger questions:
 \begin{itemize}
 	\item Is eproducibility is an issue in the geosciences? Are bad code and documentation the root cause of that issue?
