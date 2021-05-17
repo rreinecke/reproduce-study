@@ -4,12 +4,14 @@
 
 ### Runs the whole processing pipeline ###
 
-import process_data
-import plot_all
+import process_data as data
+import plot_all as plots
+import stat_tests as tests
 import os
 
 if __name__ == '__main__':
-   process_data.process()
-   plot_all.all()
+   data.process()
+   plots.all()
+   tests.run_all()
    print("Creating latex report from figures")
    os.system("cd report && ./build.sh")
