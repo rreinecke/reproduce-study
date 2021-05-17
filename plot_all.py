@@ -106,16 +106,17 @@ def p_demo(data):
             res = get_label(data, q, 11, " Field:")
             date[names[q]] = date[names[q]].map(res)
         if q == "DM07":
+            #FIXME index issue introdcues NAN values
+            continue
             res = get_label(data, q, 5, " KindOfTask:")
             date[names[q]] = date[names[q]].map(res)
             # shorten answers -> too long to plot properly
-            date.loc[date[names[q]] == " KindOfTasks: I conduct research that improves our process understanding by conducting field or lab experiments."] = "Field/Lab work"
-            date.loc[date[names[q]] == " KindOfTasks: I conduct research by developing and using computational models."] = "Develope and apply models"
-            date.loc[date[names[q]] == " KindOfTasks: I conduct research by applying computational models without building them myself."] = "Apply models"
-            date.loc[date[names[q]] == " KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
+            date.loc[date[names[q]] == "KindOfTasks: I conduct research that improves our process understanding by conducting field or lab experiments."] = "Field/Lab work"
+            date.loc[date[names[q]] == "KindOfTasks: I conduct research by developing and using computational models."] = "Develope and apply models"
+            date.loc[date[names[q]] == "KindOfTasks: I conduct research by applying computational models without building them myself."] = "Apply models"
+            date.loc[date[names[q]] == "KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
             # No answer for " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
-            # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
-            date[names[q]].dropna(inplace=True) 
+            # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting"
 
         if q == "DM05":
             '''
@@ -125,7 +126,8 @@ def p_demo(data):
             t = pd.CategoricalDtype(categories=['Global', 'Continental', '< Million km²', '< 1000 km²', '< km²', '< m²', '< cm²', 'Mixed', 'Does not apply to me'], ordered=True)
             date['sort'] = pd.Series(date[names[q]], dtype=t)
             date.sort_values(by=['sort'],inplace=True)
-        
+       
+
         ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="probability")
 
         sns.despine(trim=True, offset=2);
