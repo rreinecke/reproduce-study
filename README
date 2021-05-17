@@ -1,1 +1,18 @@
-TODO describe how to run the scripts etc.
+# REMODEL
+
+This repository contains all data from a poll in spring 2021 on reproducibility in the geosciences.
+
+## Quick Start
+
+Start the automatic plotting and report creation script:
+
+python3 run.py
+
+
+## Data
+
+The raw data can be found in LiveData as .csv files
+
+## Prerequisites
+
+TODO following libs etc. are needed
