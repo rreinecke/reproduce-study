@@ -15,4 +15,7 @@ The raw data can be found in LiveData as .csv files
 
 ## Prerequisites
 
-TODO following libs etc. are needed
+* pandas (for the data processing)
+* seaborn (for plotting)
+* texlive (latex; for the automated report)
+
