@@ -149,6 +149,30 @@ p.process()
 All data processing and plotting (including building this document) can be executed by running \lstinline{python run.py}.
 Plotting details and addtional processing can be found in th script \lstinline{plot_all.py}.
 
+Our main hypothesis for this analysis where the following:
+\begin{itemize}
+	\item \textbf{H1} Young scientists develop software more actively than established researchers.
+	\item \textbf{H2} Young scientists are more familiar with software licenses than established researchers. 
+	\item \textbf{H3} Young scientists are more familiar with modern development methods than established researchers. 
+	\item \textbf{H4} Software has gotten so complex that senior researchers are not able to comprehend it anymore. 
+ 	\item \textbf{H5} Software has gotten so complex that senior researchers are not capable in teaching the right methods.
+ 	\item \textbf{H6} Researchers code frequently but without knowledge about proper engineering methods, licences and tools. 
+ 	\item \textbf{H7} The most frequently used language is still C/Fortran. Younger scientists tend to use Python and R; this is consistent throughout fields 
+ 	\item \textbf{H8} Most researchers are autodidacts when it comes to coding. 
+ 	\item \textbf{H9} Most researchers have never reproduced code with the original model. Only with their own model. This differs between fields. 
+ 	\item \textbf{H10} Practitioners and researchers perceive the issue of reproducibility differently. Scientists are more aware (?). 
+	\item \textbf{H11} There are more researchers that apply software than they are ones that develop it. This differs between activities and fields. 
+ 	\item \textbf{H12} Most researcher do not know if their software belongs to them. 
+ 	\item \textbf{H13} Models that are available are hard to use. Causes?: Bad code, no documentation, no input data 
+ 	\item \textbf{H14} Senior researchers are convinced their work is reproducible. (much more at least than young scientists) 
+ 	\item \textbf{H15} The smaller the scale the more reproducible and accessible. 
+ 	\item \textbf{H16} Researchers think that their software is bug free and always correspond to their intended implementation. 
+ 	\item \textbf{H17} Most senior scientists think investment in FOSS doesn’t pay off. 
+ 	\item \textbf{H18} Senior researchers think that their code/project is easier to understand but that conflicts with reality. And younger researchers have the opposite understanding. 
+ 	\item \textbf{H19} We need more funding to enable reproducible computational science. 
+ 	\item \textbf{H20} New research software tends to be FOSS, big players are often legacy software grown over decades which is hard to reimplement as FOSS. 
+\end{itemize}
+
 \subsection{Sample Characteristics (demographics)}
 Who were our participants?
 Here we present characteristics of the participants in our poll, i.e. their current career stage, their years of research experience, their geo-scientific field and scale as well as their current focus of work.
@@ -168,35 +192,35 @@ Corresponding survey questions:
 	\item DM07 - What is the focus of your work?
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/DM01.png}
 	\caption{DM01 - Career stage of participants}
     \label{fig:dm01}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/DM02_01.png}
 	\caption{DM02 - For how long have you been working in your field?}
     \label{fig:dm02}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/DM06.png}
 	\caption{DM06 - Which field do you belong to?}
     \label{fig:dm06}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/DM05.png}
 	\caption{DM05 - What scale are you working on?}
     \label{fig:dm05}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/DM07.png}
 	\caption{DM07 What is the focus of your work?}
@@ -204,10 +228,8 @@ Corresponding survey questions:
 \end{figure}
 
 \subsection{Community Opinion on Reproducibility}
-
 This part covers people's view and opinion.
-
-Start here with summary of our hypotheses We assume that... (formulate in a neutral tone) TODOOOOOOO
+We assume that our defintion of reproducibility was used (annotated at several points in the poll).
 
 Analysis Steps:
 \begin{itemize}
@@ -215,34 +237,37 @@ Analysis Steps:
 	\item perform statistical testing of our above stated hypotheses (across subgroups, e.g. early career vs senior researcher)
 	\item perform further data exploration (NOT hypothesis testing) - this might inspire future research, e.g. correlation analysis
 \end{itemize}
-
-    corresponding hypotheses TODO copy here:
-        H1
-        H8
-        H10
-        H11
-
-
+ 
 Corresponding survey questions:
 \begin{itemize}
-	\item O101
-	\item O103
-	\item S113
+	\item O101 - How strongly do you agree with the following statements?
+	\item O103 - How often do you use research software in your research practice?
+	\item S113 - How long do you think does it take for an average PhD student to efficiently work with your research software?
+\end{itemize}
+
+Corresponding hypotheses
+\begin{itemize}
+	\item H4 Software has gotten so complex that senior researchers are not able to comprehend it anymore. 
+	\item H5 Software has gotten so complex that senior researchers are not capable in teaching the right methods. 
+	\item H9 Most researchers have never reproduced code with the original model. Only with their own model. This differs between fields. 
+	\item H10 Practitioners and researchers perceive the issue of reproducibility differently. Scientists are more aware (?).
+	\item H13 Models that are available are hard to use. Causes?: Bad code, no documentation, no input data.
+	\item H14 Senior researchers are convinced their work is reproducible. (much more at least than young scientists).
+	\item H16 Researchers think that their software is bug free and always correspond to their intended implementation.
 \end{itemize}
 
 O101: Opinion on Reproducibility in Geo-Sciences: How strongly did participants generally agree with statements?
 Do they consider it a problem at all? Do they think that their work is reproducible?
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/O101.png}
 	\caption{O101 }
     \label{fig:O101}
 \end{figure}
 
-
-
-O101 (hypotheses): Differences in Opinion on Reproducibility in Geo-Sciences: Do early career researcher differ from senior researchers in their agreement?
+\subsubsection{H4}
+\textbf{Differences in Opinion on Reproducibility in Geo-Sciences: Do early career researcher differ from senior researchers in their agreement?}
 
  perform statistical test (chosen by scale and sample distribution)
 
@@ -252,7 +277,7 @@ O101 (hypotheses): Differences in Opinion on Reproducibility in Geo-Sciences: Do
 
 O103: Reasons for lack of reproducibility: Rating of agreement to reasons
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/O103.png}
 	\caption{O103 }
@@ -267,7 +292,7 @@ O103: Reasons for lack of reproducibility: Rating of agreement to reasons
 
 S113: Time for new students to get familiar with software
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/S113.png}
 	\caption{S113 }
@@ -295,7 +320,7 @@ We expected to see that... (formulate in a neutral tone)
         H5
         H2
 
-    Corresponding survey questions:
+Corresponding survey questions:
         O102
         S103
         S110
@@ -307,28 +332,28 @@ We expected to see that... (formulate in a neutral tone)
         S105
         S106
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/O102.png}
 	\caption{O102 }
     \label{fig:O102}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/S103.png}
 	\caption{S103 }
     \label{fig:S103}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/S110.png}
 	\caption{S110 }
     \label{fig:S110}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/S202.png}
 	\caption{S202 }
@@ -358,14 +383,14 @@ We stated that... (formulate in a neutral tone)
         S201
         S204 (open text)
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/S201.png}
 	\caption{S201 }
     \label{fig:S201}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../word_cloud.png}
 	\caption{Full text answers as word cloud }
