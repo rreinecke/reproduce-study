@@ -105,9 +105,9 @@ def p_demo(data):
         if q == "DM06":
             res = get_label(data, q, 11, " Field:")
             date[names[q]] = date[names[q]].map(res)
+            date[names[q]] = date[names[q]].str.replace("Field: ","")
         if q == "DM07":
             #FIXME index issue introdcues NAN values
-            continue
             res = get_label(data, q, 5, " KindOfTask:")
             date[names[q]] = date[names[q]].map(res)
             # shorten answers -> too long to plot properly
@@ -117,6 +117,7 @@ def p_demo(data):
             date.loc[date[names[q]] == "KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
             # No answer for " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
             # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting"
+            date.dropna(inplace=True)
 
         if q == "DM05":
             '''
