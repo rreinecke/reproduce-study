@@ -17,10 +17,6 @@ def h4(data):
     #TODO
     pass
 
-
-    get_stats(data)
-    pass
-
 def run_all():
     data = pa.read_data()
     h4(data)
