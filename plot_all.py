@@ -173,6 +173,9 @@ def p_opinion(data):
         res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "Helpful Suggestions:", "((", explenation_s, explenation_a_s, expl_missing_s, expl_soft_s])
         df["variable"] = df["variable"].map(res)
 
+        if q == "O101":
+            df["variable"] = df["variable"].str.replace("Opinion:","") 
+            df["variable"] = df["variable"].str.replace("Implementing an algorithm based on a description from a publication yourself is the same as using the exact software package/original code that was used in that very publication.", "Description vs. implementation")
 
         if q == "O102": 
             plt.figure(figsize=(12,4))
@@ -191,6 +194,8 @@ def p_opinion(data):
         plt.subplots_adjust(left=.6)
         plt.yticks(fontsize = 7)
         ax.set(xlabel='Disagree ↔ Agree', ylabel='')
+        ax.set_xticks([-1,1,2,3,4,5,6])
+        ax.set_xticklabels(["I don't know","1","2","3","4","5","6"])
         plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
