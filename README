@@ -15,7 +15,10 @@ The raw data can be found in LiveData as .csv files
 
 ## Prerequisites
 
+Python 3.8
+
 * pandas (for the data processing)
+* pyarrow (to store tmp data)
 * seaborn (for plotting)
 * texlive (latex; for the automated report)
 
