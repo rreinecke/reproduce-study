@@ -4,6 +4,6 @@ rm *.log
 
 [ "$(ls -A ../figs)" ] && echo "Found figures" || echo "Figures not found! Run the plotting script first"
 
-pdflatex data_report.tex
+pdflatex report.tex
 # build twice to make sure all references are ok
-pdflatex data_report.tex
+pdflatex report.tex

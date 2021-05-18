@@ -25,6 +25,16 @@ except OSError as error:
 # We are reading some very long string but still want to display them fully in all plots
 pd.set_option('display.max_colwidth', None) 
 
+
+# String templates to parse them out of the data -> used to explain reproducibility in poll
+explenation_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
+explenation_a_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
+expl_missing_s = "|TODO defintion.))" 
+expl_soft_s = "|How the software is used, e.g., input format, configuration options, and example problems.))"
+
+
+########### Helper methods ###################################
+
 def read_data():
     '''
     Reads the preprocessed data from temprory feather files.
@@ -76,69 +86,6 @@ def get_label_by_names(data, qs, toremove):
         d[q] = name
     return d
 
-
-def p_demo(data):
-    '''
-    Plot Demographics
-    '''
-    #03 was the defintion that was removed, 04 does not exist
-    names = {'DM01':"Career stage",'DM02_01':"Years of experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Main work task"}
-
-    d = data['data'][names.keys()]
-    #iterate questions of catergory and plot for each
-    for q in names.keys():
-        date = d[q].copy().to_frame().sort_values(by=q)
-
-        # What should the axis say?
-        date.columns = [names[q]]
-
-        # Get the full answer text instead of only a number
-        if q not in ["DM02_01","DM06", "DM07"]:
-            res = get_full_response(data, q)
-            date[names[q]] = date[names[q]].map(res)
-            if q == "DM01":
-                # manual shorten some names -> too long to plot them properly
-                date.loc[date[names[q]] == "Student (undergraduate, Bachelor/Master or similar)"] = "Student (BA/MA)"
-                date.loc[date[names[q]] == "Group leader / junior professor"] = "Group leader"
-
-        # DM06 and DM07 have labels instead
-        if q == "DM06":
-            res = get_label(data, q, 11, " Field:")
-            date[names[q]] = date[names[q]].map(res)
-            date[names[q]] = date[names[q]].str.replace("Field: ","")
-        if q == "DM07":
-            #FIXME index issue introdcues NAN values
-            res = get_label(data, q, 5, " KindOfTask:")
-            date[names[q]] = date[names[q]].map(res)
-            # shorten answers -> too long to plot properly
-            date.loc[date[names[q]] == "KindOfTasks: I conduct research that improves our process understanding by conducting field or lab experiments."] = "Field/Lab work"
-            date.loc[date[names[q]] == "KindOfTasks: I conduct research by developing and using computational models."] = "Develope and apply models"
-            date.loc[date[names[q]] == "KindOfTasks: I conduct research by applying computational models without building them myself."] = "Apply models"
-            date.loc[date[names[q]] == "KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
-            # No answer for " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
-            # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting"
-            date.dropna(inplace=True)
-
-        if q == "DM05":
-            '''
-            Histplot does not support a categorial ordering.
-            For some plots we might want to adjust the automatic ordering to make sense.
-            '''
-            t = pd.CategoricalDtype(categories=['Global', 'Continental', '< Million km²', '< 1000 km²', '< km²', '< m²', '< cm²', 'Mixed', 'Does not apply to me'], ordered=True)
-            date['sort'] = pd.Series(date[names[q]], dtype=t)
-            date.sort_values(by=['sort'],inplace=True)
-       
-
-        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="probability")
-
-        sns.despine(trim=True, offset=2);
-        plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor")
-        plt.subplots_adjust(bottom=.3)
-        #ax.set_ylabel("")
-
-        ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
-        ax.figure.clf()
-
 def get_all_data(data, q):
     '''
     Collects data from multiple field questions like O101
@@ -151,10 +98,102 @@ def get_all_data(data, q):
     
     return date[r], r 
 
-explenation_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
-explenation_a_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
-expl_missing_s = "|TODO defintion.))" 
-expl_soft_s = "|How the software is used, e.g., input format, configuration options, and example problems.))"
+####################### Plotting #########################
+
+
+def get_demo(data, q):
+    '''
+    Preprocessing for plotting demo data
+    Also used to use prepared data in test framework
+    '''
+
+    #FIXME same dict as in plotting methode -> remove redundancy
+    names = {'DM01':"Career stage",'DM02_01':"Years of experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Main work task"}
+    d = data['data'][names.keys()] # not very efficient -.-
+    
+    date = d[q].copy().to_frame().sort_values(by=q)
+
+    # What should the axis say?
+    date.columns = [names[q]]
+
+    # Get the full answer text instead of only a number
+    if q not in ["DM02_01","DM06", "DM07"]:
+        res = get_full_response(data, q)
+        date[names[q]] = date[names[q]].map(res)
+        if q == "DM01":
+            # manual shorten some names -> too long to plot them properly
+            date.loc[date[names[q]] == "Student (undergraduate, Bachelor/Master or similar)"] = "Student (BA/MA)"
+            date.loc[date[names[q]] == "Group leader / junior professor"] = "Group leader"
+
+    # DM06 and DM07 have labels instead
+    if q == "DM06":
+        res = get_label(data, q, 11, " Field:")
+        date[names[q]] = date[names[q]].map(res)
+        date[names[q]] = date[names[q]].str.replace("Field: ","")
+    if q == "DM07":
+        #FIXME index issue introdcues NAN values
+        res = get_label(data, q, 5, " KindOfTask:")
+        date[names[q]] = date[names[q]].map(res)
+        # shorten answers -> too long to plot properly
+        date.loc[date[names[q]] == "KindOfTasks: I conduct research that improves our process understanding by conducting field or lab experiments."] = "Field/Lab work"
+        date.loc[date[names[q]] == "KindOfTasks: I conduct research by developing and using computational models."] = "Develope and apply models"
+        date.loc[date[names[q]] == "KindOfTasks: I conduct research by applying computational models without building them myself."] = "Apply models"
+        date.loc[date[names[q]] == "KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
+        # No answer for " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
+        # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting"
+        date.dropna(inplace=True)
+
+    if q == "DM05":
+        '''
+        Histplot does not support a categorial ordering.
+        For some plots we might want to adjust the automatic ordering to make sense.
+        '''
+        t = pd.CategoricalDtype(categories=['Global', 'Continental', '< Million km²', '< 1000 km²', '< km²', '< m²', '< cm²', 'Mixed', 'Does not apply to me'], ordered=True)
+        date['sort'] = pd.Series(date[names[q]], dtype=t)
+        date.sort_values(by=['sort'],inplace=True)
+     
+    return date
+
+def p_demo(data):
+    '''
+    Plot Demographics
+    '''
+    #03 was the defintion that was removed, 04 does not exist
+    names = {'DM01':"Career stage",'DM02_01':"Years of experience",'DM05':"Scale", 'DM06':"Field of research",'DM07': "Main work task"}
+
+    for q in names.keys():  
+        date = get_demo(data,q)
+        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="probability")
+
+        sns.despine(trim=True, offset=2);
+        plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor")
+        plt.subplots_adjust(bottom=.3)
+        #ax.set_ylabel("")
+
+        ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
+        ax.figure.clf()
+
+
+def get_opinion(data, q):
+    '''
+    Prepare the data for the opinion plots.
+    Also used in the test framework to get the same "clean" data
+    '''
+    d, cols = get_all_data(data, q)
+
+    # frame with O101_01 etc. as col and data as row
+    d.reset_index(level=0, inplace=True) 
+    df = pd.melt(d, id_vars=['index'], value_vars=cols)
+
+    res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "Helpful Suggestions:", "((", explenation_s, explenation_a_s, expl_missing_s, expl_soft_s])
+    df["variable"] = df["variable"].map(res)
+
+    if q == "O101":
+        df["variable"] = df["variable"].str.replace("Opinion:","") 
+        df["variable"] = df["variable"].str.replace("Implementing an algorithm based on a description from a publication yourself is the same as using the exact software package/original code that was used in that very publication.", "Description vs. implementation")
+    
+    return df
+
 
 def p_opinion(data):
     '''
@@ -165,19 +204,7 @@ def p_opinion(data):
     
     #iterate questions of catergory and plot box for each
     for q in names.keys():
-        d, cols = get_all_data(data, q)
-
-        # frame with O101_01 etc. as col and data as row
-        d.reset_index(level=0, inplace=True) 
-        df = pd.melt(d, id_vars=['index'], value_vars=cols)
-
-        res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "Helpful Suggestions:", "((", explenation_s, explenation_a_s, expl_missing_s, expl_soft_s])
-        df["variable"] = df["variable"].map(res)
-
-        if q == "O101":
-            df["variable"] = df["variable"].str.replace("Opinion:","") 
-            df["variable"] = df["variable"].str.replace("Implementing an algorithm based on a description from a publication yourself is the same as using the exact software package/original code that was used in that very publication.", "Description vs. implementation")
-
+        df = get_opinion(data,q)
         if q == "O102": 
             plt.figure(figsize=(12,4))
             plt.yticks(fontsize = 8)
@@ -338,7 +365,6 @@ def p_self2(data):
             print("Total responses: {}".format(d["S203"].count()))
             counts = {"I publish all my code as open source": count_occur(d, "S203", -1), "I don't want to": count_occur(d, "S203", -2), "Does not apply to me": count_occur(d, "S203", -3)}
             print(counts)
-
 
 
 def all():
