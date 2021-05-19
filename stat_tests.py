@@ -193,4 +193,4 @@ def run_all():
     h14(data)
     h16(data)
 
-run_all()
+#run_all()
