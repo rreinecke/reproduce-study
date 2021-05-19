@@ -1,9 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% University/School Laboratory Report
-% LaTeX Template
-% Version 3.1 (25/3/14)
-%
-% This template has been downloaded from:
+% Based on template downloaded from:
 % http://www.LaTeXTemplates.com
 %
 % Original author:
@@ -14,11 +10,6 @@
 % CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
-
 \documentclass{article}
 
 \usepackage[version=3]{mhchem} % Package for chemical equation typesetting
@@ -66,11 +57,9 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{REMODEL- A Community Poll on Reproducibility in Computational Geosciences} % Title
+\title{\textbf{REMODEL automated report} \\ A Community Poll on Reproducibility in Computational Geosciences} % Title
 
 \author{Robert \textsc{Reinecke}} % Author name
-
-\date{\today} % Date for the report
 
 \begin{document}
 
@@ -78,7 +67,8 @@
 
 \begin{center}
 \begin{tabular}{l r}
-Report last updated: & 17th May, 2021 \\ % Date
+Report last updated: & 19th May, 2021\\
+Compilation date: & \today
 \end{tabular}
 \end{center}
 
@@ -153,8 +143,8 @@ Our main hypothesis for this analysis where the following:
 	\item \textbf{H1} Young scientists develop software more actively than established researchers.
 	\item \textbf{H2} Young scientists are more familiar with software licenses than established researchers. 
 	\item \textbf{H3} Young scientists are more familiar with modern development methods than established researchers. 
-	\item \textbf{H4} Software has gotten so complex that senior researchers are not able to comprehend it anymore. 
- 	\item \textbf{H5} Software has gotten so complex that senior researchers are not capable in teaching the right methods.
+	\item \textbf{H4} Senior researcher percieve reproducability as a lesser problem than early career researchers.
+ 	\item \textbf{H5} Software complexity is the main reason for a lack of reproducability.
  	\item \textbf{H6} Researchers code frequently but without knowledge about proper engineering methods, licences and tools. 
  	\item \textbf{H7} The most frequently used language is still C/Fortran. Younger scientists tend to use Python and R; this is consistent throughout fields 
  	\item \textbf{H8} Most researchers are autodidacts when it comes to coding. 
@@ -241,15 +231,14 @@ Analysis Steps:
 Corresponding survey questions:
 \begin{itemize}
 	\item O101 - How strongly do you agree with the following statements?
-	\item O103 - How often do you use research software in your research practice?
+	\item O103 - What are the reasons for a lack of reproducibility?
 	\item S113 - How long do you think does it take for an average PhD student to efficiently work with your research software?
 \end{itemize}
 
 Corresponding hypotheses
 \begin{itemize}
-	\item H4 Software has gotten so complex that senior researchers are not able to comprehend it anymore. 
-	\item H5 Software has gotten so complex that senior researchers are not capable in teaching the right methods. 
-	\item H9 Most researchers have never reproduced code with the original model. Only with their own model. This differs between fields. 
+	\item H4 Senior researcher percieve reproducability as a lesser problem than early career researchers.
+ 	\item H5 Software complexity is the main reason for a lack of reproducability.
 	\item H10 Practitioners and researchers perceive the issue of reproducibility differently. Scientists are more aware (?).
 	\item H13 Models that are available are hard to use. Causes?: Bad code, no documentation, no input data.
 	\item H14 Senior researchers are convinced their work is reproducible. (much more at least than young scientists).
@@ -269,7 +258,7 @@ Do they consider it a problem at all? Do they think that their work is reproduci
 \begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/O103.png}
-	\caption{O103 How often do you use research software?}
+	\caption{O103 What are the reasons for poor reproducibility?}
     \label{fig:O103}
 \end{figure}
 
@@ -282,46 +271,35 @@ Do they consider it a problem at all? Do they think that their work is reproduci
 
 \newpage
 
-\subsubsection{H4}
-\textbf{Differences in Opinion on Reproducibility in Geo-Sciences: Do early career researcher differ from senior researchers in their agreement?}
+\subsubsection{H4 Differences in Opinion on Reproducibility}
 
 \input{../h4.tex}
 
-\subsubsection{H5}
+\subsubsection{H5 Reasons for lack of reproducibility}
 
-\textbf{Reasons for lack of reproducibility: Rating of agreement to reasons}
+\input{../h5.tex}
 
- perform hypothesis test
+\subsubsection{H10 Practitioners are less awarte of the issue}
 
- explore data even further
+No Data to investiagte this question. Only scientists answered the poll.
 
- etc...
+\subsubsection{H13 Reasons for reproducibility}
 
-\subsubsection{H9}
+See H5. No addtional data to explore this further.
 
-\textbf{XX}
+\subsubsection{H14 Senior researchers are convinced their work is reproducible. (much more at least than young scientists).}
 
-\subsubsection{H10}
+\input{../h14.tex}
 
-\textbf{XX}
+\subsubsection{H16 Researchers think that their software is bug free and always correspond to their intended implementation.}
+We did not ask a question that perfectly relates. Parts are answered in Fig. \ref{fig:O101}.
+Main relation to question: Implementing an algorithm based on a description from a publication yourself is the same as using the exact software package/original code that was used in that very publication.
 
-\subsubsection{H13}
-
-\textbf{XX}
-
-\subsubsection{H14}
-
-\textbf{XX}
-
-\subsubsection{H15}
-
-\textbf{XX}
-
+\input{../h16.tex}
 
 \newpage
 
 \subsection{Reproducibility Practices and Skills}
-
 This part covers "actual" behaviour. (still only self-report assessment, but we can't change that)
 
     Start here with summary of our hypotheses
@@ -333,24 +311,30 @@ We expected to see that... (formulate in a neutral tone)
         perform statistical testing of our above stated hypotheses (across subgroups, e.g. early career vs senior researcher)
         perform further data exploration (NOT hypothesis testing) - this might inspire future research, e.g. correlation analysis
 
-    corresponding hypotheses (see Robert's evaluation plan):
-        H6
-        H9
-        H12
-        H5
-        H2
+
+Corresponding hypotheses
+\begin{itemize}
+	\item H6 Researchers code frequently but without knowledge about engeneering methods licences and tools.
+	\item H9 Most researchers have never reproduced code with the original model. Only with their own model. This differs between fields.
+	\item H12 Most researchers don't know if their software belongs to them.
+	\item H2 Young scientists are more familiar with licencing issues.
+\end{itemize}
+
+
 
 Corresponding survey questions:
-        O102
-        S103
-        S110
-        S202
-        S112
-        S101
-        S111
-        S104
-        S105
-        S106
+\begin{itemize}
+	\item O102 -
+	\item S103
+	\item S110
+	\item S202
+	\item S112
+	\item S101
+	\item S111
+	\item S104
+	\item S105
+	\item S106
+\end{itemize}
 
 \begin{figure}[!p]
     \centering
@@ -379,6 +363,10 @@ Corresponding survey questions:
 	\caption{S202 }
     \label{fig:S202}
 \end{figure}
+
+\subsubsection{H9 Activity of reproduction}
+
+\textbf{XX}
 
 \subsection{Hurdles against and Solutions towards Reproducibility}
 
