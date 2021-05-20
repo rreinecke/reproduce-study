@@ -205,6 +205,12 @@ def p_opinion(data):
     #iterate questions of catergory and plot box for each
     for q in names.keys():
         df = get_opinion(data,q)
+        # calculate the percentage of dont know answers (-1)
+        valid_answers_n = df[df.value > 0].groupby('variable').count()
+        dontknow_answers_n = df[df.value < 0].groupby('variable').count()
+        answers_n_categories = pd.merge(valid_answers_n.value, dontknow_answers_n.value, how="outer",
+                                        left_index=True, right_index=True).fillna(0)
+        dont_know_ratio = answers_n_categories.value_y / answers_n_categories.value_x
         if q == "O102": 
             plt.figure(figsize=(12,4))
             plt.yticks(fontsize = 8)
@@ -216,14 +222,17 @@ def p_opinion(data):
             ax.figure.clf()
             continue
 
-        plt.figure(figsize=(12,4))
-        ax = sns.boxplot(y="variable", x="value", data=df, orient="h")
+        plt.figure(figsize=(12, 4))
+        ax = sns.boxplot(y="variable", x="value", data=df[df.value > 0], orient="h")
 
         plt.subplots_adjust(left=.6)
-        plt.yticks(fontsize = 7)
+        plt.yticks(fontsize=7)
         ax.set(xlabel='Disagree ↔ Agree', ylabel='')
-        ax.set_xticks([-1,1,2,3,4,5,6])
-        ax.set_xticklabels(["I don't know","1","2","3","4","5","6"])
+        ax.set_xticks([-1, 0, 1, 2, 3, 4, 5, 6])
+        ax.set_xticklabels(["", "I don't know", "1", "2", "3", "4", "5", "6"])
+        for x in [x.label for x in ax.yaxis.get_major_ticks()]:
+            ax.text(0, x.get_position()[1], '{:.1%}'.format(dont_know_ratio[x.get_text()]),
+                    ha='center', va='center')
         plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
