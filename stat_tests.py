@@ -45,34 +45,34 @@ def h4(data):
     alpha = 1e-3
        
     with open('report/h4.tex', 'w+') as f:
-        f.write("Established researchers {}".format(ids_old.size))
+        f.write("Number of established (full Prof.) researchers: {}\n".format(ids_old.size))
         
         f.write("\n")
-        f.write("Young researchers {}".format(ids_y.size))
+        f.write("Number of young (Students, PhD candidates, Postdocs, Junior Prof., Associate Prof.) researchers: {}\n".format(ids_y.size))
         
         f.write("\n")
-        f.write("Mean agreement to reproducibility".format(rep['O101_01'].mean()))
+        f.write("Mean agreement to reproducibility: {:2f}\n".format(rep['O101_01'].mean()))
         
         f.write("\n")
-        f.write("Mean agreement among Y {}\n".format(r_y['O101_01'].mean()))
+        f.write("Mean agreement among young sc.: {:2f}\n".format(r_y['O101_01'].mean()))
         
         f.write("\n")        
-        f.write("Mean agreement among O {}\n".format(r_o['O101_01'].mean()))
+        f.write("Mean agreement among established sc.: {:2f}\n".format(r_o['O101_01'].mean()))
         
         f.write("\n")
-        f.write("Median agreement to reproducibility {}\n".format(rep['O101_01'].median()))
+        f.write("Median agreement to reproducibility: {:2f}\n".format(rep['O101_01'].median()))
         
         f.write("\n")
-        f.write("Median agreement among Y {}\n".format(r_y['O101_01'].median()))
+        f.write("Median agreement among young sc.: {:2f}\n".format(r_y['O101_01'].median()))
  
         f.write("\n")
-        f.write("Median agreement among O {}\n".format(r_o['O101_01'].median()))
+        f.write("Median agreement among established sc.: {:2f}\n".format(r_o['O101_01'].median()))
         if p < alpha:
             f.write("Career has no normal distribution\n")
         else:
             f.write("Career is possibly normaly distributed\n") 
         f.write("\n")
-        f.write("No statistical test possible, samples of Prof. to low to do a proper Wilcoxon or even t-test\n")
+        f.write("No statistical test possible, samples of to low to do a proper Wilcoxon or even t-test\n")
 
 def h5(data):
     '''
@@ -109,28 +109,28 @@ def h5(data):
 
     with open('report/h5.tex', 'w+') as f:
         f.write("\n")
-        f.write("Mean workflow: {}, code documentation : {}, code complexity: {}, input data not available: {}, code availability: {}, written language: {}\n".format(getWithout('O103_01',df), getWithout('O103_02',df), getWithout('O103_03',df), getWithout('O103_04',df), getWithout('O103_05',df), getWithout('O103_06',df)))
+        f.write("All answers (without don't know) -  Mean workflow: {:2f}, code documentation : {:2f}, code complexity: {:2f}, input data not available: {:2f}, code availability: {:2f}, written language: {:2f}\n".format(getWithout('O103_01',df), getWithout('O103_02',df), getWithout('O103_03',df), getWithout('O103_04',df), getWithout('O103_05',df), getWithout('O103_06',df)))
         
-        f.write("\n") 
-        f.write("Main reason: Input data. 2: code availability, 3: workflow, 4: documentation, 5: complexity\n")
+        f.write("\n")
+        f.write("Thus, the main reason for a lack of reproducibility is: Input data, then 2: code availability, 3: documentation, 4: workflow, 5: code complexity, 6: language\n")
 
         f.write("\n")
-        f.write("Mean agreement code complexity\n".format(rep['O103_03'].mean()))
+        f.write("Mean agreement code complexity {:2f}\n".format(rep['O103_03'].mean()))
         
         f.write("\n")
-        f.write("Mean agreement among Y {}\n".format(r_y['O103_03'].mean()))
+        f.write("Mean agreement among young sc.: {:2f}\n".format(r_y['O103_03'].mean()))
         
         f.write("\n")        
-        f.write("Mean agreement among O {}\n".format(r_o['O103_03'].mean()))
+        f.write("Mean agreement among established sc.: {:2f}\n".format(r_o['O103_03'].mean()))
         
         f.write("\n")
-        f.write("Median agreement {}\n".format(rep['O103_03'].median()))
+        f.write("Median agreement: {:2f}\n".format(rep['O103_03'].median()))
         
         f.write("\n")
-        f.write("Median agreement among Y {}\n".format(r_y['O103_03'].median()))
+        f.write("Median agreement among young sc.: {:2f}\n".format(r_y['O103_03'].median()))
  
         f.write("\n")
-        f.write("Median agreement among O {}\n".format(r_o['O103_03'].median()))
+        f.write("Median agreement established sc: {:2f}\n".format(r_o['O103_03'].median()))
 
 
 def h14(data):
@@ -166,22 +166,22 @@ def h14(data):
 
     with open('report/h14.tex', 'w+') as f:
         f.write("\n")
-        f.write("Mean agreement my own research is reproducible {}\n".format(rep['O101_03'].mean()))
+        f.write("Mean agreement on: my own research is reproducible: {:2f}\n".format(rep['O101_03'].mean()))
         
         f.write("\n")
-        f.write("Mean agreement among Y {}\n".format(r_y['O101_03'].mean()))
+        f.write("Mean agreement among young sc.: {:2f}\n".format(r_y['O101_03'].mean()))
         
         f.write("\n")        
-        f.write("Mean agreement among O {}\n".format(r_o['O101_03'].mean()))
+        f.write("Mean agreement among estbalished sc: {:2f}\n".format(r_o['O101_03'].mean()))
         
         f.write("\n")
-        f.write("Median agreement {}\n".format(rep['O101_03'].median()))
+        f.write("Median agreement: {:2f}\n".format(rep['O101_03'].median()))
         
         f.write("\n")
-        f.write("Median agreement among Y {}\n".format(r_y['O101_03'].median()))
+        f.write("Median agreement among young sc: {:2f}\n".format(r_y['O101_03'].median()))
  
         f.write("\n")
-        f.write("Median agreement among O {}\n".format(r_o['O101_03'].median()))
+        f.write("Median agreement among established sc.: {:2f}\n".format(r_o['O101_03'].median()))
 
 def h16(data):
     '''
@@ -190,7 +190,7 @@ def h16(data):
     df = data["data"]
     with open('report/h16.tex', 'w+') as f:
         f.write("\n")
-        f.write("Mean agreement description is same as implementation (including don't know) {}\n".format(getWithout('O101_17',df))) 
+        f.write("Mean agreement - description is same as implementation: {:2f}\n".format(getWithout('O101_17',df))) 
 
 def run_all():
     data = pa.read_data()
