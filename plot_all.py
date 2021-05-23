@@ -211,6 +211,7 @@ def p_opinion(data):
         answers_n_categories = pd.merge(valid_answers_n.value, dontknow_answers_n.value, how="outer",
                                         left_index=True, right_index=True).fillna(0)
         dont_know_ratio = answers_n_categories.value_y / answers_n_categories.value_x
+        
         if q == "O102": 
             plt.figure(figsize=(12,4))
             plt.yticks(fontsize = 8)
@@ -230,6 +231,7 @@ def p_opinion(data):
         ax.set(xlabel='Disagree ↔ Agree', ylabel='')
         ax.set_xticks([-1, 0, 1, 2, 3, 4, 5, 6])
         ax.set_xticklabels(["", "I don't know", "1", "2", "3", "4", "5", "6"])
+        # Plot the don't know percentages
         for x in [x.label for x in ax.yaxis.get_major_ticks()]:
             ax.text(0, x.get_position()[1], '{:.1%}'.format(dont_know_ratio[x.get_text()]),
                     ha='center', va='center')

@@ -2,6 +2,10 @@ import pandas as pd
 import plot_all as pa
 from scipy import stats
 
+def getWithout(key, df):
+        # get means without don't know
+        return df[df[key] > 0][key].mean()
+
 def h4(data):
     '''
     On reproducibility
@@ -40,14 +44,14 @@ def h4(data):
     k2, p = stats.normaltest(df['DM01'].to_numpy())
     alpha = 1e-3
        
-    with open('h4.tex', 'w+') as f:
+    with open('report/h4.tex', 'w+') as f:
         f.write("Established researchers {}".format(ids_old.size))
         
         f.write("\n")
         f.write("Young researchers {}".format(ids_y.size))
         
         f.write("\n")
-        f.write("Mean agreement to reproducibility without don't know {}\n".format(rep['O101_01'].mean()))
+        f.write("Mean agreement to reproducibility".format(rep['O101_01'].mean()))
         
         f.write("\n")
         f.write("Mean agreement among Y {}\n".format(r_y['O101_01'].mean()))
@@ -101,15 +105,17 @@ def h5(data):
     r_y = rep.merge(ids_y, on='CASE', how='right')
     r_o = rep.merge(ids_old, on='CASE', how='right')
 
-    with open('h5.tex', 'w+') as f:
+   
+
+    with open('report/h5.tex', 'w+') as f:
         f.write("\n")
-        f.write("!Inlcude don't know Mean workflow: {}, code documentation : {}, code complexity: {}, input data not available: {}, code availability: {}, written language: {}\n".format(df['O103_01'].mean(),df['O103_02'].mean(),df['O103_03'].mean(),df['O103_04'].mean(),df['O103_05'].mean(),df['O103_06'].mean()))
+        f.write("Mean workflow: {}, code documentation : {}, code complexity: {}, input data not available: {}, code availability: {}, written language: {}\n".format(getWithout('O103_01',df), getWithout('O103_02',df), getWithout('O103_03',df), getWithout('O103_04',df), getWithout('O103_05',df), getWithout('O103_06',df)))
         
         f.write("\n") 
         f.write("Main reason: Input data. 2: code availability, 3: workflow, 4: documentation, 5: complexity\n")
 
         f.write("\n")
-        f.write("Mean agreement code complexity without don't know {}\n".format(rep['O103_03'].mean()))
+        f.write("Mean agreement code complexity\n".format(rep['O103_03'].mean()))
         
         f.write("\n")
         f.write("Mean agreement among Y {}\n".format(r_y['O103_03'].mean()))
@@ -158,7 +164,7 @@ def h14(data):
     r_y = rep.merge(ids_y, on='CASE', how='right')
     r_o = rep.merge(ids_old, on='CASE', how='right')
 
-    with open('h14.tex', 'w+') as f:
+    with open('report/h14.tex', 'w+') as f:
         f.write("\n")
         f.write("Mean agreement my own research is reproducible {}\n".format(rep['O101_03'].mean()))
         
@@ -182,9 +188,9 @@ def h16(data):
     Description vs implementation
     '''
     df = data["data"]
-    with open('h16.tex', 'w+') as f:
+    with open('report/h16.tex', 'w+') as f:
         f.write("\n")
-        f.write("Mean agreement description is same as implementation (including don't know) {}\n".format(df['O101_17'].mean())) 
+        f.write("Mean agreement description is same as implementation (including don't know) {}\n".format(getWithout('O101_17',df))) 
 
 def run_all():
     data = pa.read_data()
