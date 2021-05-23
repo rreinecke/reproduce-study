@@ -168,7 +168,7 @@ def p_demo(data):
         sns.despine(trim=True, offset=2);
         plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor")
         plt.subplots_adjust(bottom=.3)
-        #ax.set_ylabel("")
+        ax.set_ylabel("%")
 
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
@@ -294,8 +294,9 @@ def p_self(data):
         plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
         plt.subplots_adjust(bottom=.2)
        
-        ax.set_xlabel(names[q])
-        
+        ax.set_xlabel(names[q]) 
+        ax.set_ylabel("%")
+
         plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
@@ -313,8 +314,10 @@ def p_self2(data):
             if q == "S111":
                 f.write("\\textbf{S111}\n")
                 f.write("\n")
+                #FIXME This could be accieved much more nicely!! with pandas + generic method.. but due to time contrains it is now ugly and repetative for all the following answers sorry! :/
+                answers = {q: ["Answer provided", "None", "Don't know"], 'val': [d[d["S111s"] != "none"]['S111s'].count(), count_occur(d,"S111s","none"),  count_occur(d,"S111","-1")]}
+                df = pd.DataFrame(answers)
                 f.write("What software licences do you use? Results: {} \n".format(d["S111s"].unique()))
-                f.write("\n")
 
             if q == "S112":
                 f.write("\\textbf{S112}\n")
@@ -323,21 +326,22 @@ def p_self2(data):
                 f.write("\n") 
                 f.write("Other licences mentioned: {}\n".format(d['S112_08a'].unique()))
                 # Currently this does not assess how often an alternative was mentioned
+               
+                ans = ["I don't know them at all", "I have heard of them"]
+                val = [count_occur(d, "S112", -2),  count_occur(d, "S112", -1)]
                 
-                f.write("\n")
-                f.write("Alternative answers. I dont know them at all: {}, I have heard of them but have no idea what they stand for: {}".format(count_occur(d, "S112", -2),  count_occur(d, "S112", -1)))
-
                 # selected = 2, not selected = 1
                 # S112 _01-08
-                f.write("\n")
-                f.write("Number of times licences were recongnized: \n")
-                f.write("\n")
                 res = get_label(data, q, 8, " Licence2:")
                 d_counts = d.drop(['S112','S112_08a'], axis=1)
                 d_counts.columns = [w.replace("Licence2:", "") for w in res.values()]
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
-                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+                    ans.append(label)
+                    val.append(count_occur(d_counts, label, 2))
+
+                answers = {q: ans, 'val': val}
+                df = pd.DataFrame(answers)
 
             if q == "S101":
                 f.write("\\textbf{S101}\n")
@@ -351,21 +355,24 @@ def p_self2(data):
                 un = [w.replace("&", "and") for w in un]
                 f.write("Other languages mentioned: {}\n".format(un))
                 
+                ans = []
+                val = []
+                
                 # selected = 2, not selected = 1
                 # S101 _01-06
-                f.write("\n")
-                f.write("Number of times languages were selected: \n")
-                f.write("\n")
                 res = get_label(data, q, 6, " Programming Languages:")
                 del res[5] # does not exist
                 d_counts = d.drop(['S101','S101_06a'], axis=1)
                 d_counts.columns = [w.replace("Programming Languages:", "") for w in res.values()]
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
-                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+                    ans.append(label)
+                    val.append(count_occur(d_counts, label, 2))
 
-                f.write("\n")
-                f.write("None of the above {}\n\n".format(count_occur(d, "S101", -1)))
+                ans.append("None of the above")
+                val.append(count_occur(d, "S101", -1))
+                answers = {q: ans, 'val': val}
+                df = pd.DataFrame(answers)
             
             if q == "S104":
                 f.write("\\textbf{S104}\n")
@@ -375,20 +382,24 @@ def p_self2(data):
                 f.write("\n")
                 f.write("Others mentioned: {}\n".format(d['S104_09a'].unique()))
                 
+                ans = []
+                val = []
+                
                 # selected = 2, not selected = 1
                 # S104 _01-09
-                f.write("\n")
-                f.write("Number of times methods were selected: \n")
-                f.write("\n")
                 res = get_label(data, q, 9, " Software Development Methods:")
                 del res[6] # does not exist
                 d_counts = d.drop(['S104','S104_09a'], axis=1)
                 d_counts.columns = [w.replace("Software Development Methods:", "") for w in res.values()]
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
-                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
-
-                f.write("None of the above: {}\n\n".format(count_occur(d, "S104", -1)))
+                    ans.append(label)
+                    val.append(count_occur(d_counts, label, 2))
+                
+                ans.append("None of the above")
+                val.append(count_occur(d, "S104", -1))
+                answers = {q: ans, 'val': val}
+                df = pd.DataFrame(answers)
 
             if q == "S105":
                 f.write("\\textbf{S105}\n")
@@ -398,40 +409,42 @@ def p_self2(data):
                 f.write("\n")
                 #Currently this does not assess how often an alternative was mentioned
                 f.write("Others mentioned: {}".format(d['S105_04a'].unique()))
-                f.write("\n")
+                
+                ans = []
+                val = []
                 
                 # selected = 2, not selected = 1
                 # S105 _01-04
-                f.write("\n")
-                f.write("Number of times tools were selected: \n")
-                f.write("\n")
                 res = get_label(data, q, 4, " Software Development Tools:")
                 d_counts = d.drop(['S105','S105_04a'], axis=1)
                 d_counts.columns = [w.replace("Software Development Tools:", "") for w in res.values()]
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
-                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
-
-                f.write("None of the above {}\n\n".format(count_occur(d, "S105", -1)))
+                    ans.append(label)
+                    val.append(count_occur(d_counts, label, 2))
+                
+                ans.append("None of the above")
+                val.append(count_occur(d, "S105", -1))
+                answers = {q: ans, 'val': val}
+                df = pd.DataFrame(answers)
 
             if q == "S106":
-                f.write("\\textbf{S106}\n")
-                f.write("\n")
-
-                f.write("Where did you learn to programm?\n\n")
+                ans = []
+                val = []
                 # selected = 2, not selected = 1
                 # S106 _01-06
-                f.write("\n")
-                f.write("Trainings that were selected: \n")
-                f.write("\n")
                 res = get_label(data, q, 6, " Training methods:")
                 d_counts = d.drop(['S106'], axis=1)
                 d_counts.columns = [w.replace("Training methods:", "") for w in res.values()]
-                # iterate possible answers and print number selected
+                # iterate possible answers and print number selected 
                 for label in d_counts.columns:
-                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
-
-                f.write("I'm not able to write my own code: {}\n\n".format(count_occur(d, "S106", -1)))
+                    ans.append(label)
+                    val.append(count_occur(d_counts, label, 2))
+                
+                ans.append("I'm not able to write my own code")
+                val.append(count_occur(d, "S106", -1))
+                answers = {q: ans, 'val': val}
+                df = pd.DataFrame(answers)
 
             if q == "S203":
                 f.write("\\textbf{S203}\n")
@@ -442,22 +455,39 @@ def p_self2(data):
 
                 f.write("Other reasons mentioned: {}\n\n".format(d['S203_06a'].unique()))
                 
+                ans = []
+                val = []
+
                 # selected = 2, not selected = 1
                 # S203 _01-08
-                f.write("\n")
-                f.write("Hurdles that were selected: \n")
-                f.write("\n")
                 res = get_label(data, q, 9, " Hurdles:")
                 del res[9]
                 d_counts = d.drop(['S203','S203_06a'], axis=1)
                 d_counts.columns = [w.replace("Hurdles:", "") for w in res.values()]
-                # iterate possible answers and print number selected
+                # iterate possible answers and print number selected 
                 for label in d_counts.columns:
-                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+                    ans.append(label)
+                    val.append(count_occur(d_counts, label, 2))
+                
+                ans.append("I publish all my code as open source")
+                val.append(count_occur(d, "S203", -1))
+                ans.append("I don't want to")
+                val.append(count_occur(d, "S203", -2))
+                ans.append("Does not apply to me")
+                val.append(count_occur(d, "S203", -3))
+                
+                answers = {q: ans, 'val': val}
+                df = pd.DataFrame(answers)
 
-                f.write("I publish all my code as open source: {}\n\n".format(count_occur(d, "S203", -1)))
-                f.write("I don't want to: {}\n\n".format(count_occur(d, "S203", -2)))
-                f.write("Does not apply to me: {}\n\n".format(count_occur(d, "S203", -3)))
+
+            ax = df.plot.bar(x=q, y='val', legend=False)
+            plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
+            plt.subplots_adjust(bottom=.2)
+            ax.set_ylabel("Count")
+
+            plt.tight_layout()
+            ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
+            ax.figure.clf()
 
 
 def all():
