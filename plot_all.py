@@ -306,76 +306,158 @@ def p_self2(data):
     def count_occur(data, string, what):
         return data.loc[data[string] == what][string].count()
     
-    for q in names.keys():
-        d, cols = get_all_data(data, q)
+    with open('report/self.tex', 'w+') as f:
+        for q in names.keys():
+            d, cols = get_all_data(data, q)
         
-        if q == "S111":
-            print("What licences do you use?")
-            print(d["S111s"].unique())
+            if q == "S111":
+                f.write("\\textbf{S111}\n")
+                f.write("\n")
+                f.write("What software licences do you use? Results: {} \n".format(d["S111s"].unique()))
+                f.write("\n")
+
+            if q == "S112":
+                f.write("\\textbf{S112}\n")
+                f.write("\n")
+                f.write("Which of the licences are you familar with?\n")
+                f.write("\n") 
+                f.write("Other licences mentioned: {}\n".format(d['S112_08a'].unique()))
+                # Currently this does not assess how often an alternative was mentioned
+                
+                f.write("\n")
+                f.write("Alternative answers. I dont know them at all: {}, I have heard of them but have no idea what they stand for: {}".format(count_occur(d, "S112", -2),  count_occur(d, "S112", -1)))
+
+                # selected = 2, not selected = 1
+                # S112 _01-08
+                f.write("\n")
+                f.write("Number of times licences were recongnized: \n")
+                f.write("\n")
+                res = get_label(data, q, 8, " Licence2:")
+                d_counts = d.drop(['S112','S112_08a'], axis=1)
+                d_counts.columns = [w.replace("Licence2:", "") for w in res.values()]
+                # iterate possible answers and print number selected
+                for label in d_counts.columns:
+                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+
+            if q == "S101":
+                f.write("\\textbf{S101}\n")
+                f.write("\n")
+                f.write("What kind of programming languages do you mainly use? \n")
+                
+                f.write("\n")
+                #Currently this does not assess how often an alternative was mentioned
+                un = d['S101_06a'].unique() # somebody used a & -.- -- bad for latex
+                un = un[1:]
+                un = [w.replace("&", "and") for w in un]
+                f.write("Other languages mentioned: {}\n".format(un))
+                
+                # selected = 2, not selected = 1
+                # S101 _01-06
+                f.write("\n")
+                f.write("Number of times languages were selected: \n")
+                f.write("\n")
+                res = get_label(data, q, 6, " Programming Languages:")
+                del res[5] # does not exist
+                d_counts = d.drop(['S101','S101_06a'], axis=1)
+                d_counts.columns = [w.replace("Programming Languages:", "") for w in res.values()]
+                # iterate possible answers and print number selected
+                for label in d_counts.columns:
+                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+
+                f.write("\n")
+                f.write("None of the above {}\n\n".format(count_occur(d, "S101", -1)))
             
-        if q == "S112":
-            print("Which of the licences are you familar with?")
-            un = d['S112_08a'].unique()
-            #FIXME currently this does not assess how often an alternative was mentioned
-            print("Other licences mentioned: {}".format(un))
-            print(d.mean())
-            print("GNU is number 4")
-            print("Total responses: {}".format(d["S112"].count()))
-            counts = {"I dont know them": count_occur(d, "S112", -2), "Only by name": count_occur(d, "S112", -1)}
-            print(counts)
+            if q == "S104":
+                f.write("\\textbf{S104}\n")
+                f.write("\n")
+                f.write("What methods are you applying?\n")
+                #Currently this does not assess how often an alternative was mentioned
+                f.write("\n")
+                f.write("Others mentioned: {}\n".format(d['S104_09a'].unique()))
+                
+                # selected = 2, not selected = 1
+                # S104 _01-09
+                f.write("\n")
+                f.write("Number of times methods were selected: \n")
+                f.write("\n")
+                res = get_label(data, q, 9, " Software Development Methods:")
+                del res[6] # does not exist
+                d_counts = d.drop(['S104','S104_09a'], axis=1)
+                d_counts.columns = [w.replace("Software Development Methods:", "") for w in res.values()]
+                # iterate possible answers and print number selected
+                for label in d_counts.columns:
+                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
 
-        if q == "S101":
-            print("What kind of programming languages do you mainly use?")
-            un = d['S101_06a'].unique()
-            #FIXME currently this does not assess how often an alternative was mentioned
-            print("Other languages mentioned: {}".format(un))
-            print(d.mean())
-            print("03= Python, 04= R")
-            print("Total responses: {}".format(d["S101"].count()))
-            counts = {"None of the above": count_occur(d, "S101", -1)}
-            print(counts)
-        
-        if q == "S104":
-            print("What methods are you applying?")
-            un = d['S104_09a'].unique()
-            #FIXME currently this does not assess how often an alternative was mentioned
-            print("Others mentioned: {}".format(un))
-            print(d.mean())
-            print("04 = Object oriented")
-            print("Total responses: {}".format(d["S104"].count()))
-            counts = {"None of the above": count_occur(d, "S104", -1)}
-            print(counts)
+                f.write("None of the above: {}\n\n".format(count_occur(d, "S104", -1)))
 
-        if q == "S105":
-            print("What tools are you using?")
-            un = d['S105_04a'].unique()
-            #FIXME currently this does not assess how often an alternative was mentioned
-            print("Others mentioned: {}".format(un))
-            print(d.mean())
-            print("01 = Version control")
-            print("Total responses: {}".format(d["S105"].count()))
-            counts = {"None of the above": count_occur(d, "S105", -1)}
-            print(counts)
+            if q == "S105":
+                f.write("\\textbf{S105}\n")
+                f.write("\n")
 
-        if q == "S106":
-            print("Where did you learn to programm?")
-            print(d.mean())
-            print("...")
-            print("Total responses: {}".format(d["S106"].count()))
-            counts = {"I'm not able to write my own code": count_occur(d, "S106", -1)}
-            print(counts)
+                f.write("What tools are you using?\n")
+                f.write("\n")
+                #Currently this does not assess how often an alternative was mentioned
+                f.write("Others mentioned: {}".format(d['S105_04a'].unique()))
+                f.write("\n")
+                
+                # selected = 2, not selected = 1
+                # S105 _01-04
+                f.write("\n")
+                f.write("Number of times tools were selected: \n")
+                f.write("\n")
+                res = get_label(data, q, 4, " Software Development Tools:")
+                d_counts = d.drop(['S105','S105_04a'], axis=1)
+                d_counts.columns = [w.replace("Software Development Tools:", "") for w in res.values()]
+                # iterate possible answers and print number selected
+                for label in d_counts.columns:
+                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
 
-        if q == "S203":
-            print("What keeps you from Open Source?")
-            un = d['S203_06a'].unique()
-            #FIXME currently this does not assess how often an alternative was mentioned
-            print("Others mentioned: {}".format(un))
+                f.write("None of the above {}\n\n".format(count_occur(d, "S105", -1)))
 
-            print(d.mean())
-            print("...")
-            print("Total responses: {}".format(d["S203"].count()))
-            counts = {"I publish all my code as open source": count_occur(d, "S203", -1), "I don't want to": count_occur(d, "S203", -2), "Does not apply to me": count_occur(d, "S203", -3)}
-            print(counts)
+            if q == "S106":
+                f.write("\\textbf{S106}\n")
+                f.write("\n")
+
+                f.write("Where did you learn to programm?\n\n")
+                # selected = 2, not selected = 1
+                # S106 _01-06
+                f.write("\n")
+                f.write("Trainings that were selected: \n")
+                f.write("\n")
+                res = get_label(data, q, 6, " Training methods:")
+                d_counts = d.drop(['S106'], axis=1)
+                d_counts.columns = [w.replace("Training methods:", "") for w in res.values()]
+                # iterate possible answers and print number selected
+                for label in d_counts.columns:
+                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+
+                f.write("I'm not able to write my own code: {}\n\n".format(count_occur(d, "S106", -1)))
+
+            if q == "S203":
+                f.write("\\textbf{S203}\n")
+                f.write("\n")
+
+                f.write("What keeps you from publishing as Open Source?\n\n")
+                #Currently this does not assess how often an alternative was mentioned
+
+                f.write("Other reasons mentioned: {}\n\n".format(d['S203_06a'].unique()))
+                
+                # selected = 2, not selected = 1
+                # S203 _01-08
+                f.write("\n")
+                f.write("Hurdles that were selected: \n")
+                f.write("\n")
+                res = get_label(data, q, 9, " Hurdles:")
+                del res[9]
+                d_counts = d.drop(['S203','S203_06a'], axis=1)
+                d_counts.columns = [w.replace("Hurdles:", "") for w in res.values()]
+                # iterate possible answers and print number selected
+                for label in d_counts.columns:
+                    f.write(label + " {}\n\n".format(count_occur(d_counts, label, 2)))
+
+                f.write("I publish all my code as open source: {}\n\n".format(count_occur(d, "S203", -1)))
+                f.write("I don't want to: {}\n\n".format(count_occur(d, "S203", -2)))
+                f.write("Does not apply to me: {}\n\n".format(count_occur(d, "S203", -3)))
 
 
 def all():
