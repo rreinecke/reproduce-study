@@ -4,6 +4,8 @@ tmp
 *.swp
 *.aux
 *.log
+*.lof
+*.toc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

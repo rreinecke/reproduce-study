@@ -67,15 +67,22 @@
 
 \begin{center}
 \begin{tabular}{l r}
-Report last updated: & 19th May, 2021\\
+Report last updated: & May 27, 2021\\
 Compilation date: & \today
 \end{tabular}
 \end{center}
 
-This document summerizes a full analysis for detailed results. \textbf{It is not a full publication but rather an automated representation of the data present in this repository}
+This document summerizes a full analysis for detailed results. \textbf{It is not a full publication but rather an automated representation of the data present in this repository.}
 
 It summarizes the extensive results and builds the foundation for the publication of a journal paper.
 It will also be distributed along with the data in the course of a journal and data publication.
+
+\thispagestyle{empty}
+
+\tableofcontents
+\listoffigures
+
+\newpage
 
 \section{Aim of this survey}
 Software development has become an integral part of the geosciences$^{1}$ as models and data processing get more sophisticated.
@@ -159,7 +166,6 @@ Our main hypothesis for this analysis where the following:
  	\item \textbf{H17} Most senior scientists think investment in FOSS doesn’t pay off. 
  	\item \textbf{H18} Senior researchers think that their code/project is easier to understand but that conflicts with reality. And younger researchers have the opposite understanding. 
  	\item \textbf{H19} We need more funding to enable reproducible computational science. 
- 	\item \textbf{H20} New research software tends to be FOSS, big players are often legacy software grown over decades which is hard to reimplement as FOSS. 
 \end{itemize}
 
 \subsection{Sample Characteristics (demographics)}
@@ -218,16 +224,12 @@ Corresponding survey questions:
 \newpage
 
 \subsection{Community Opinion on Reproducibility}
-This part covers people's view and opinion.
-We assume that our defintion of reproducibility was used (annotated at several points in the poll).
+This part covers people's view and opinion. We assume that our defintion of reproducibility was used (annotated at several points in the poll).
 
-Analysis Steps:
-\begin{itemize}
-	\item plot corresponding questions (across full sample)
-	\item perform statistical testing of our above stated hypotheses (across subgroups, e.g. early career vs senior researcher)
-	\item perform further data exploration (NOT hypothesis testing) - this might inspire future research, e.g. correlation analysis
-\end{itemize}
- 
+This part focuses on how reproducibility is perceived by different researchers and what the causes are for limited reproducibility.
+
+We expected that early career scientists are more aware of the problem than senior scientists. We further expected that a main cause for a lack of reproducibility is the lack of accessible code and input data.
+
 Corresponding survey questions:
 \begin{itemize}
 	\item O101 - How strongly do you agree with the following statements?
@@ -300,17 +302,11 @@ Main relation to question: Implementing an algorithm based on a description from
 \newpage
 
 \subsection{Reproducibility Practices and Skills}
-This part covers "actual" behaviour. (still only self-report assessment, but we can't change that)
+This part covers "actual" behaviour. This is only a self-report assessment.
 
-    Start here with summary of our hypotheses
+Summarized, we wanted to know if researchers actively participate in reproducing results. Furthermore, we were intrested in finding out what kind of tools and licences they use to publish their own results.
 
-We expected to see that... (formulate in a neutral tone)
-
-    Analysis Steps:
-        plot corresponding questions (across full sample)
-        perform statistical testing of our above stated hypotheses (across subgroups, e.g. early career vs senior researcher)
-        perform further data exploration (NOT hypothesis testing) - this might inspire future research, e.g. correlation analysis
-
+We expected to see that that less than 50\% are actively repoducing results and that general knowledge about tools and licenses is low.
 
 Corresponding hypotheses
 \begin{itemize}
@@ -318,9 +314,10 @@ Corresponding hypotheses
 	\item H9 Most researchers have never reproduced code with the original model. Only with their own model. This differs between fields.
 	\item H12 Most researchers don't know if their software belongs to them.
 	\item H2 Young scientists are more familiar with licencing issues.
+	\item H7 The most frequently used language is still C/Fortran. Younger scientists tend to use Python and R
+	\item H13 Models that are available are hard to use. Causes?: Bad code, no documentation, no input data
+	\item H3 Young scientists are more familiar with modern development methods than established researchers.
 \end{itemize}
-
-
 
 Corresponding survey questions:
 \begin{itemize}
@@ -409,12 +406,6 @@ Corresponding survey questions:
     \label{fig:S106}
 \end{figure}
 
-\begin{figure}[!p]
-    \centering
-    \includegraphics[width=\textwidth]{../figs/S203.png}
-	\caption{S203 What keeps you from publishing as Open Source?}
-    \label{fig:S203}
-\end{figure}
 
 \newpage
 
@@ -422,44 +413,71 @@ Corresponding survey questions:
 
 \newpage
 \subsubsection{H9 Activity of reproduction}
+See also Fig. \ref{fig:O102}
 
-\textbf{XX}
+We mainly have answers from hydrology. Splitting and plotting the results proably wont get much additonal information that is valuable. Core for plotting this is implemented in the plotting script.
+
+\subsubsection{H12 Software ownership}
+See Fig. \ref{fig:S202}.
+
+\subsubsection{H2 Licensing}
+\input{h2.tex}
+
+\subsubsection{H7 The most frequently used language}
+See Fig. \ref{fig:S101}
+
+\subsubsection{H13 Models that are available are hard to use}
+Not possible to clearly answer this question.
+
+\subsubsection{H3 Young scientists are more familiar with modern development methods}
+\input{h3.tex}
+
+\newpage
 
 \subsection{Hurdles against and Solutions towards Reproducibility}
+In this part we are assessing what keeps scientists from publishing as Open Source and what we can do do increase reproducibility.
+We expected to see lack of funding as mean reason and a main solution to the reproducibility problem.
 
-This part covers "actual" behaviour. (still only self-report assessment, but we can't change that)
 
-    Start here with summary of our hypotheses
+Corresponding hypotheses
+\begin{itemize}	
+	\item H19 We need more funding to enable reproducible computational science.
+\end{itemize}
 
-We stated that... (formulate in a neutral tone)
+Corresponding survey questions:
+\begin{itemize}
+	\item S203 - What keeps you from publishing as open source?
+	\item S201 - What would help to increase reproducibility?
+	\item S204 - Open text - what can the community do?
+\end{itemize}
 
-    Analysis Steps:
-        plot corresponding questions (across full sample)
-        perform statistical testing of our above stated hypotheses (across subgroups, e.g. early career vs senior researcher)
-        perform further data exploration (NOT hypothesis testing) - this might inspire future research, e.g. correlation analysis
-
-    corresponding hypotheses (see Robert's evaluation plan):
-        H7
-        H13
-        H3
-
-    Corresponding survey questions:
-        S203 - What keeps you from publishing as open source?
-        S201 - What would help to increase reproducibility?
-        S204 (open text)
+\begin{figure}[!p]
+    \centering
+    \includegraphics[width=\textwidth]{../figs/S203.png}
+	\caption{S203 What keeps you from publishing as Open Source?}
+    \label{fig:S203}
+\end{figure}
 
 \begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../figs/S201.png}
-	\caption{S201 }
+	\caption{S201 What would help to increase reproducibility?, First question mean is at 4.95}
     \label{fig:S201}
 \end{figure}
 
 \begin{figure}[!p]
     \centering
     \includegraphics[width=\textwidth]{../word_cloud.png}
-	\caption{Full text answers as word cloud }
+	\caption{Full text answers as word cloud.}
     \label{fig:wc}
 \end{figure}
+
+\subsubsection{H19 Funding necessary?}
+See Fig. \ref{fig:S201}
+
+\subsubsection{All fulltext answers}
+%TODO run a cleanup script for importing all full text answers here
+%Or clean them up by hand ?
+%\input{../S204_answers.csv}
 
 \end{document}

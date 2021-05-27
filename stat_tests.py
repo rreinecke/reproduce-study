@@ -6,6 +6,45 @@ def getWithout(key, df):
         # get means without don't know
         return df[df[key] > 0][key].mean()
 
+def h2(data):
+    '''
+    Are younger scientists more familiar with software licences?
+    '''
+    df = data["data"]
+    # Testing with years of experience
+    ids_old = df[df['DM02_01'] > 20]['CASE']
+    ids_y = df[df['DM02_01'] <= 20]['CASE']
+    
+    lic = df[['CASE','S112']]
+    lic = lic[lic['S112'] < 0] # get only don't know also counting only heard of
+    r_y = lic.merge(ids_y, on='CASE', how='right')
+    r_o = lic.merge(ids_old, on='CASE', how='right')
+    
+    with open('report/h2.tex', 'w+') as f:
+        f.write("Younger = less than 20 years of experience. \n\n")
+        f.write("Number of younger researchers which do not know about licences: {}\n\n".format(r_y["S112"].count()))
+        f.write("Number of established researchers which do not know about licences: {}\n\n".format(r_o["S112"].count()))
+
+def h3(data):
+    '''
+    Are younger scientists more familiar with methods?
+    '''
+    df = data["data"]
+    # Testing with years of experience
+    ids_old = df[df['DM02_01'] > 20]['CASE']
+    ids_y = df[df['DM02_01'] <= 20]['CASE']
+    
+    lic = df[['CASE','S104']]
+    lic = lic[lic['S104'] < 0] # get only don't know also counting only heard of
+    r_y = lic.merge(ids_y, on='CASE', how='right')
+    r_o = lic.merge(ids_old, on='CASE', how='right')
+    
+    with open('report/h3.tex', 'w+') as f:
+        f.write("Younger = less than 20 years of experience. \n\n")
+        f.write("Number of younger researchers which do not know about methods: {}\n\n".format(r_y["S104"].count()))
+        f.write("Number of established researchers which do not know about methods: {}\n\n".format(r_o["S104"].count()))
+
+
 def h4(data):
     '''
     On reproducibility
@@ -192,8 +231,11 @@ def h16(data):
         f.write("\n")
         f.write("Mean agreement - description is same as implementation: {:2f}\n".format(getWithout('O101_17',df))) 
 
+
 def run_all():
     data = pa.read_data()
+    h2(data)
+    h3(data)
     h4(data)
     h5(data)
     h14(data)

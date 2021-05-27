@@ -86,7 +86,7 @@ def get_label_by_names(data, qs, toremove):
         d[q] = name
     return d
 
-def get_all_data(data, q):
+def get_all_data(data, q, withCase = False):
     '''
     Collects data from multiple field questions like O101
     '''
@@ -96,6 +96,10 @@ def get_all_data(data, q):
     col = date.columns.to_list()
     r = [i for i in col if q in i]
     
+    # provide the case number as well
+    if withCase:
+        r.append('CASE')
+
     return date[r], r 
 
 ####################### Plotting #########################
@@ -174,16 +178,20 @@ def p_demo(data):
         ax.figure.clf()
 
 
-def get_opinion(data, q):
+def get_opinion(data, q, withCase = False):
     '''
     Prepare the data for the opinion plots.
     Also used in the test framework to get the same "clean" data
     '''
-    d, cols = get_all_data(data, q)
+    d, cols = get_all_data(data, q, withCase)
 
     # frame with O101_01 etc. as col and data as row
-    d.reset_index(level=0, inplace=True) 
-    df = pd.melt(d, id_vars=['index'], value_vars=cols)
+    if withCase:
+        del cols[2]
+        df = pd.melt(d, id_vars=['CASE'], value_vars=cols)
+    else:
+        d.reset_index(level=0, inplace=True)
+        df = pd.melt(d, id_vars=['index'], value_vars=cols)
 
     res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "Helpful Suggestions:", "((", explenation_s, explenation_a_s, expl_missing_s, expl_soft_s])
     df["variable"] = df["variable"].map(res)
@@ -191,7 +199,9 @@ def get_opinion(data, q):
     if q == "O101":
         df["variable"] = df["variable"].str.replace("Opinion:","") 
         df["variable"] = df["variable"].str.replace("Implementing an algorithm based on a description from a publication yourself is the same as using the exact software package/original code that was used in that very publication.", "Description vs. implementation")
-    
+    if q == "S201":
+        df["variable"] = df["variable"].str.replace("Funding opportunities dedicated to reproduciblity  \|For example for a trained programmer to develop reuseable code and workflows.\)\)", "Funding opportunities")
+        df["variable"] = df["variable"].str.replace("Reduce the complexity of code  \|For example through the application of established software engeneering concepts and a general improved code quality.\)\)", "Reduction of code complexity")
     return df
 
 
@@ -216,12 +226,58 @@ def p_opinion(data):
             plt.figure(figsize=(12,4))
             plt.yticks(fontsize = 8)
             df["Answer"] = df["value"].map({1:"Yes", 2:"No"})
-            ax = sns.histplot(y="variable", hue="Answer", data=df, discrete=True, multiple="stack", shrink=.8)
+            ax = sns.histplot(y="variable", hue="Answer", data=df, discrete=True, multiple="stack", shrink=.8, linewidth=.8)
             plt.subplots_adjust(left=.5)
             ax.set(ylabel='')
             ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
             ax.figure.clf()
+
+            # Produce an additonal plot that relates answers to fields
+            # 1) get the data on fields - CASE is the person that answered the poll
+            df_fields = data["data"][['CASE','DM06']]
+            res = get_label(data, 'DM06', 11, " Field:")
+            df_fields['DM06'] = df_fields['DM06'].map(res)
+            df_fields['DM06'] = df_fields['DM06'].str.replace("Field: ","")
+            # 2) get O102 with CASE for join
+            df = get_opinion(data, q, withCase = True)
+            df = df.merge(df_fields, on='CASE')
+
+            #df.groupby('DM06').
+            # We need to build our own bar plot here ... no lib supports this properly
+            #bar_width = 0.35
+            #epsilon = .015
+            #line_width = 1
+            #opacity = 0.7
+            #bar_one_pos = np.arange(len(df['DM06'].unique()))
+            #bar_two_pos = bar_one_pos + bar_width
+
+            
+            #bar1 = plt.bar(pos_bar_positions, pos_mut_pcts, bar_width,
+            #                          color='#ED0020',
+            #                          label='HPV+ Mutations')
+            #bar2 = plt.bar(pos_bar_positions, pos_cna_pcts, bar_width-epsilon,
+            #                          bottom=bar1,
+            #                          alpha=opacity,
+            #                          color='white',
+            #                          edgecolor='#ED0020',
+            #                          linewidth=line_width,
+            #                          hatch='//',
+            #                          label='HPV+ CNA')
+            
+            #plt.legend(bbox_to_anchor=(1.1, 1.05))  
+            #sns.despine()  
+            #plt.show()  
+
+
+            #ax.figure.savefig(d_path + sl + q + '_1' + ".png", dpi=200)
+            #ax.figure.clf()
+            #exit()
+                
             continue
+
+        if q == "S201":
+            d_tmp = df[df["variable"] == " Funding opportunities"]
+            print("Mean of S201: {}".format(d_tmp[d_tmp.value > 0]["value"].mean()))
 
         plt.figure(figsize=(12, 4))
         ax = sns.boxplot(y="variable", x="value", data=df[df.value > 0], orient="h")
