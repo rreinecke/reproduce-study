@@ -465,19 +465,249 @@ Corresponding survey questions:
     \label{fig:S201}
 \end{figure}
 
-\begin{figure}[!p]
+\subsubsection{H19 Funding necessary?}
+See Fig. \ref{fig:S201}
+
+\newpage
+
+\subsection{All fulltext answers}
+This is a manually cleaned collection of the full text answers.
+If you would like to access the uncleaned data use the S204.csv file.
+
+The follwing organizes the answers into overarching ideas that were suggested. If an answer suggested multiple ideas it was split. But no content was removed!
+
+\begin{figure}[!h]
     \centering
     \includegraphics[width=\textwidth]{../word_cloud.png}
 	\caption{Full text answers as word cloud.}
     \label{fig:wc}
 \end{figure}
 
-\subsubsection{H19 Funding necessary?}
-See Fig. \ref{fig:S201}
 
-\subsubsection{All fulltext answers}
-%TODO run a cleanup script for importing all full text answers here
-%Or clean them up by hand ?
-%\input{../S204_answers.csv}
+\paragraph{It is complicated}
+\begin{itemize}
+	\item In the climate community this is not very easily addressed. Reproducing the output of global climate models would be absurdly time and resource consuming. Reproducing the paper figures based on the author's code and data used is doable, but is it complete reproducibility?
+	\item The emphasis of reproducibility and novelty is killing sciences in the developing world, especially in over-exploited complex GW systems.
+	\item I am overwhelmed with the endless variety of licenses, programing languages, sharing repositories, the constant migration towards newer approaches that make older ones obsolete. I don't know how to, but if this could be streamlined it would be most useful to me. The community would need to agree to some standard sharing norms that we all should follow.
+	\item Thanks for taking up the idea. Really important  issue. However for me reproducibility in modelling in hydrology would not mean just coding issues, the questionnaire is a bit biased toward formal criteria concerning coding. Reproducibility of research in mathematical modelling (including statistical models) in   hydrology is a  more complex issue.  I doubt, that even being offered the codes, all raw data and a detailed  description of the work done, it would be easy to reproduce someones results nowadays. These include subjective interpretations  of partial results and decisions taken based on these. Hydrology is not a lab science.
+	\item I am not so sure that in our field reproducibility MUST be a condition for publication. It is not only a matter of considering the code. It works with data, which, depending on several circumstances, might have been acquired to a very high cost in financial and physical terms. Sharing this data might have certain non-convenient related aspects. For instance, multiple analyses might be associated to a unique data set. Writing a manuscript, depending on job-related conditions, may take a while. In the meanwhile, between a published work instant, some other research group might be working with ""your"" data and publish one of your ideas, before you, who actually collected the data; all of this, just because for publishing your past research you were obliged to share all of your data and code just because of ""reproducibility"". Further, it is my oppinion that ""doubting"" on our research results just because we do not share everything, including software and data, is not that  correct, nor that logical. Shall we doubt on what has been already published?... on the work of Beven, Refsgaard, Abbot, etc (hydrology)? Beven have shared TOPMODEL, most probably becasuse he was always interested in so, but al;so because its original development was financed explicitly with that purpose in mind... The Danish effort of Abbot and Refsgaard, MIKE SHE, is commercial... what will happen when I do research with a commercial software and cannot share it... even if I share the data, the research won't be 100\% replicable.... does it mean that the research is bad and as such non-publicable?
+	\item Funding dedicated to this would be great. Stricter requirements (e.g., code review with publication) could be useful, but I worry about unintended consequences and the practicality - e.g., might become more difficult to find reviewers, more difficult for early career researchers in computational fields to publish relative to competitiors in non-computational fields.
+	\item recognize that just sharing the code does not gaurantee reprodicibility. Results are very dependent on libraries used, often even operating systems used (famous example where MRI results were treated differently on mac vs windows machines in genetics research because the file sorting algorithm was different for those operating systems)
+
+It is therefore 
+- important to consider the entire compute environment used when working towards fully reproducible results
+- try to keep this compute environment as lightweight, portable and machine agnostic as possible. Currently containers are a great way of achieving this.
+	\item The COMPLEXITY of reproducibility is often underestimated. This issue has been a major topic within the social sciences, and there now exist a nice collection of resources that necessarily reflect the broad range of what is considered ""reproducible"" and there are insights and resources portable to the geosciences, see e.g. https://www.bitss.org/
+\end{itemize}
+
+\paragraph{Share more and share data and model together}
+\begin{itemize}
+	\item Foster putting codes publicly available (e;g. through github)
+	\item Share not only model, but when using application: (1) Share the input and settings you have used to run the model. Share (if possible) the dataset that you have used to compare the simulation results with (when comparing simulations with real data).
+	\item Publish data alongside research papers. With the documentation contained within the paper, the results should be reproducible.
+	\item Publication of code and (exemplary, applied) data with the manuscript as a standard ? but also acknowledging the extra efforts required for this.
+	\item A more detailed description in the paper and a share option for code "share code and data with others, stronger collaborative efforts rather than competitive mindest, reduce the amount of code developing by individual working groups and rely more on available codes and community efforts for code development for similar questions and applications.
+	\item develop and maintain open access databases
+	\item Agree on common tests for code, models.
+	\item Make data and code publicly available and thoroughly documented
+	\item SHARE! Share your data, share your code!
+	\item Improve sharing culture of open access data - data is often the problem
+	\item Models needs data and produce data. data should go with the FAIR priciples
+	\item Providing step-by-step supporting information besides the results. Listing all the assumptions.
+	\item Encourage publishing of code online in repostries like github.
+	\item One challenge that I see with reproducibility is the need for openly accessible data. Individuals who fund field campaigns that generate data feel somewhat ""used"" by modellers who do not obtain funding to generate data and in some cases expect that all data should be freely available. Essentially, if one researcher goes through the trouble of collecting and funding data why should the rewards of their efforts go to others before they have had the opportunity of fully exploiting that data. Additionally, if you put a temporal embargo on data availability so that data is private for some duration this may prevent students or PIs from publishing findings involving that data within that time period because of journal data sharing requirements. Perhaps using synthetic data is an option for demonstrating analysis and validity without exploiting data generators.
+	\item It's not only about codes but also about data which should be published along with the code. I think the past decade has seen some progress in making codes publicly available.
+	\item Show your work in appendix, attachment, online, etc
+	\item - We need to have an honest discussion about why people don't share their code. My impression is that the answers are similar to why anonymous reviews should be maintained.  
+- Researchers are rarely required to produce good code. I mean when was the last time someone took your code apart and tested it? And producing good code takes practice, but also the need to want to write well-structured and well-tested code. I think the problem can only be improved if we accept that all of us are part of it and that all of us probably produce research output that is not reproducible.
+	\item Share codes or softwares but overall share the input files. Do not publish papers that relying on code and data do not provide them. Stop using proprietary close-source software. Ever.
+	\item The models that we use need to be open-source. Also, sharing the scripts (e.g. via GitHub) that we use for data post-processing would be useful and maybe even necessary.
+\end{itemize}
+
+\paragraph{Check during submission and journal responsibilities}
+\begin{itemize}
+	\item Most data are already provided within the most publications. So why not using a software tool during the submission to check reproducibility of results based on the code and the data
+	\item Journals should enforce FAIR not just get everyone away with it
+	\item Submitting for publications and working on open source codes could be made the norms by the editors.
+	\item code repository connected to scientific journals where the modelling study is published
+	\item Publishers, Editors, and Reviewers should require all source code to be made available in open repositories (if necessary with a restricted access like Zenodo)
+	\item Increase mentions of code sharing and research reproducibility in research publications, include code review in peer-review process.
+	\item not accept papers anymore that obviously have something to hide or are completely unwilling to share.
+	\item more critical peer review on methodology/code (when supplied as supplementary material, no review is required/possible) 
+	\item When reviewing a manuscript (mine or other), I ask myself, can I make the same model from the information in the code? Are inputs explained? what assumptions were made? Making these things very clear can help. 
+	\item I would love to discuss how to standardize reporting model setups. I think this should probably rather come from journals.
+	\item Include all codes during publication of work, should be mandatory by all journals.
+	\item Move beyond the static paper and encourage to have the code as supplement, or do things like jupyter notebooks in addition or instead of a paper.
+	\item Encourage / demand data and software to be published along with research papers. Strengthen the role of peer-review (e.g. stronger acknowledge Publons) and post-publication review (see Pubpeer).
+	\item A big help would be to have code available as frequently as possible and it being part of the review process. Datasets should be easily made available. When those cannot be shared, present synthetic series and results to be replicated by the community.
+	\item only reproducible Research for publication
+	\item Include more code in papers and describe it Better/required documentation
+	\item Journals should mandate reproducibility and include it in the review process.
+	\item We are moving towards the right direction. Code should be attached to publications along with ALL input data and the reviewers should be able just to run it to see if it works, if it generates the same outputs presented in the paper and eventually to check if all steps are correctly implemented.
+	\item Just share the code with good documentation and comments. So many high impact journals have no code documentation at all (even recent ones, despite apparent journal requirements). There is a huge burden of time for researchers to do this, though.
+	\item Impose to publish with open source model codes
+	\item Every paper should provide code and data for running and plotting every figure in it.
+	\item A reproducibility-test should be part of the review-process. 
+	\item Encourage code releases or links to source-code repositories as part of the manuscript acceptance/publication process, similar to how data is now commonly required to be released. There also needs to be an acknowledgement of the importance of releasing code in funding opportunities, and specific funds allocated for that. 
+	\item Move towards requiring all source code and data (that does not have legal restrictions on its use) to be published or deposited in a publicly available respository for all publications. 
+	\item Journals should require code/data for publication where possible. Code review would be great, but it would probably be too time consuming for volunteer reviewers. Maybe journals could hire some data scientists to just check the code for correctness as a separate part of the review?
+	\item Journals should move towards requiring experimental reproducibility as a part of criteria for publication.
+This means abandoning the publish or perish model as a basis for professional advancement.
+To enable this, collaborations to assess reproducibility should be professionally rewarded.
+	\item Rolf Hut (yes, I know I broke annonimity...) ":
+"Journals should push for open and reproducible code and open data. If researchers do not want to share their code/data, they should be able to give a good reason.
+While clear guidelines are helpful, it should also be made relatively easy. There's already a lot we have to do as researchers, so there's limited capacity to also become a ""professional software developer"". I think being too demanding (e.g. as a journal) might put people off, so we should balance the requirements with the effort they involve. That's also true for reviewing. Code reviewing is generally a great idea, but it will make reviewing more time consuming. 
+Then I think we should make a distinction depending on the type of paper/code. If it's a paper that presents a new model, for example, then I would require a more thorough code review compared to a paper that just uses that model to produce results. Generally, we should distinguish between research software, i.e. where the focus is on the software itself, and research that uses software. Well written and documented code is always helpful, but quite often specific code used to setup a model for a specific case study simply isn't reused that often. So I think it is potentially unnecessary to expect the same standards (e.g. documentation) in that case."
+	\item enforce transparency policies with journals.
+	\item ask for providing codes during article submission
+	\item Require code to be published/available if it is used/referenced in a manuscript.
+	\item Pay people who conduct peer review, and require reproducability be taken into account in the peer review process
+	\item Put reproducibility as ""mandatory"" in the publication of our scientific results
+	\item Make code publication mandatory, including working examples (at least small sample dataset). As witht he EGU copernicus journals, require data publication on some repository. If the latter is not possible due to data restrictions, require data repository of processed dataset (e.g. alternated values - same data disstribution and trend ...) and the entire post-processing workflow.
+	\item Demand that the code is peer reviewed by qualified peer reviewers
+\end{itemize}
+
+\paragraph{Need for specialized personel}
+\begin{itemize}
+	\item We need people who can help to improve reproducibility, as many researchers with a focus on analytics and conceptualization are not familiar with coding and licenses. Still those researchers have great ideas that should not be ranked lower just because those people are not familiar with this new, necessary movement
+	\item Invite experienced software engineers as consultants for model software development.
+	\item Hire more research software engineers that oversee sustainable software development practices and help with standardising, testing, and publishing research software.
+\end{itemize}
+
+\paragraph{Teaching}
+\begin{itemize}
+	\item A lot of today's scientific endeavor is performed through a process akin to software development yet there is a blatant gap between the standards to which scientific code and industry code are held to. For the sake of reproducibility and as a service to many graduates that will pursue a career in the private sector, industry standards should be taught and enforced. Publishing code and data is not enough if the authors are the only persons able to make sense of it. Versioning, packaging, long-form documentation, testing, continuous integration and deployment should become widely accepted standards in scientific software development as they have become in the private sector.
+	\item Teaching reproducibility (with respect to software, data and measurements) in environmental sciences.
+	\item provide better material to learn about reproducibility and it's benefits, standardize the teaching of coding skills and their ""best practices"" in MSc or at the latest PhD programms, allocate TIME (and thus money) for making work reproducible
+	\item Often clear guidelines and courses for beginners on how to ensure reproducibility from the very beginning are missing. For a beginner the different steps and tasks can seem overwhelming. Teaching from the very beginning and setting out the rules for a minimum standard could help improve the reproducibility.
+	\item We need a lot more training. 
+	\item Dedicate a few months at the beginning of a PhD or Postdoc position for a crashcourse in professional programming.
+	\item Mandatory crashcourses for senior researchers and professors in how to *evaluate* code quality. If journal reviewers and supervisors have no idea what good software looks like, it will never be rewarded.
+	\item Universities should teach how to increase computational reproducibility.
+	\item Provide resources to help with the open science
+	\item build on scientific code of others, and develop it differentially (in the sense of changesets).
+	\item Give researchers the resources they need to learn to produce readable, well documented code and have consistent standards across journals regarding code and data availability.
+	\item More classes at university level on coding and/or workshops for more advanced researchers
+	\item Continous training is very important for aweraness creation.
+	\item Include these concepts in courses taught to undergrads and graduate students
+	\item There should be more courses on ""code documentation"" and ""publishing your code"" e.g. as public packages - not only at the university/institution level but internationally as well. From my experience, most people code for their own purposes, but they are willing (or even happy) to share their code, but they feel embarassed of its structure and functionality. To overcome this, they do not only need to learn the best practices, but also how to publish code; from small packages for simple tasks to complex packages for complex tasks. For the latter, often time to maintain these packages is lacking ? this should be accounted for somehow.
+\end{itemize}
+
+\paragraph{Practices}
+\begin{itemize}
+	\item Shadow or Pair computing could be made the norm.
+	\item At my institution, we are lately developing a strong focus on reproducibility. Especially for young scientists who are starting their projects, e.g., PhD students (in particular those that come from a non-programmer background) this topic seems to be overwhelming. They are struggling to get familiar with the models, with programming, with their research projects, and they are now also asked to strongly focus on reproducibility, ideally to a level where they think about Continuous Integration, Conainerizing of models and scripts, and extensive documentation. This is a lot to ask of a beginner. What we often hear from them is that they are already severely time-constrained and would like to dedicate more time to reproducibility, but don't see how they can do it within their allotted time for their project/thesis. Reproducibility should become more of a standard procedure in modeling-associated research, but to actually make it happen, it seems that it needs to be planned into the design of the research projects right from the start, to ensure that there is enough time available that can be dedicated to make research reproducible, and to teach (young) scientists who are not yet familiar with the concept and the means to implement it.
+	\item I would recommend reproducing the result by a colleague not part of the concerned project/paper before submission. I believe this will increase the confidence and reproducibility of the research. 
+Communicate the workflow
+	\item Require all code open source.
+	\item Publish code as publication.
+	\item Present your code to your lab mates, receive critiques
+	\item Formalize the conceptual modelling steps prior to program coding
+	\item Code review within my research group has been an incredible process for improving the readability, structure, and best practices of my code. Code review events or conferences might be a good way to improve reproducibility.
+	\item Encourage standards / best practices for developing, documenting, and archiving code, including scripts for pre-/post-processing inputs/output data.
+	\item Emphasize documentation, read-me?s. Transfer of information after someone finishes a PhD is so lacking because people are normally scrambling to finish, and don?t think to put their models in a shared drive
+	\item Include the code as annnex to the manuscript with a clear description of the steps used to get to the presented results (i.e. imputs, paramenters type and values, followed procedure, exceptions, approximations...)
+	\item All the inputs used for the computation must be rigorously described, and also the methodology for make sure that the produced results are correct (e.g.: convergence studies in CFD)
+	\item The computational cost of replicating a global, continental, large-sample hydrological studies is too high. A sollution would be to create a demonstration dataset, which is a subset of the whole study, for testing reproducibility.
+	\item Develop community standards for transparency and open-source softwater development (especially in the research community)
+	\item Mostly an attitude  values thing. - Value publication of workflows and data similar to scientific findings - Encourage the citing of dataset/code DOIs (in addition to any papers describing said data/code) - Move away from the ""I needed time to create this code and I don't want others to benefit from my work"" attitude (by doing e.g. the two things above)
+	\item Have more allocated time (i.e. and that relates closely to funding) to prepare codes that are relatively easy to read by others in order to be able to share them.
+\end{itemize}
+
+\paragraph{Institutional support and change}
+\begin{itemize}
+	\item The science community and funding institutions should put as high value on a good sceintific code - reviewed, documented and published - as on scientific papers. This actually also applies to research data that are along with software less valued than a paper. This requires a shift in a mindset which has started, but will take some time (years-decades) till we are there. You can do a PhD with three published papers, but not with a paper + a documented open-source code and a documented doi-Dataset! This is a point where to start change things. Of course, this may open door to easy-way PhDs consisting of a few subroutines, an Excel-Table and a low-profile paper, but this is what the supervisor and finally the PhD commission should look at.
+	\item Universities should provide service entities which guide, support and review scientific software development to avoid the autodidact diversity of styles and mistakes.
+	\item Universities should recognise Research Software (and related papers in journals such as JOSS) as publications and part of PhD theses. 
+	\item Each institutions/university should make reproducibility a priority, create data bases like OpenABM website to upload open source codes.
+	\item Guidelines for reproducible software generation, not just reproducible research in general, would be helpful, in addition to funding for improving established research software.
+	\item Institutional know-how passing on and being updated. Organize within the institution. Create side projects within the institution where researchers can actually work and publish their code together. Make these side projects mandatory.
+	\item Make reproducibility more understood by management and funding agencies
+	\item Having an AGU or University wide standard to follow in our discipline would be nice as an early career scientist in order to follow best practices. 
+	\item Offer more guidance and resources to groups from institutions.
+	\item In my country (UK) there is very little funding for good coding practice and almost no professional incentives for such activities (i.e., reproducibility and production of open source software has never come up in an appraisal or promotion case for me). 
+Maintaining software for the community is a lot of work and my employer would much rather see me write papers with that time. 
+Universities like citations: more standarisation of software citation might change this balance of incentives. 
+There needs to be more funding for research software engineers.
+\end{itemize}
+
+\paragraph{General change, time, funding, recognition}
+\begin{itemize}
+	\item Provide best practice guidelines, funding, and recognition for reproducible science. The current currency is publications, not well documented, tested, and reproducible research.
+	\item I think that time is a very important factor. Many scientists work in projects that up to now often do not allocate time to the reproducibility process. So the time to invest in reproducibility competes with time to produce project results. I think it could help to actually allocate time (and thus funding) to making science reproducible in project proposals.
+	\item And we need to acknowledge that this is a considerable time investment for PhD students and post-docs who are the main scientists developing code. Current projects have very tight timelines that are often not feasible because of poor planning and poor time management - this is without investing time in reproducibility. Time devoted to reproducibility needs to be factored into project proposals and projects need to be guided with a Scrum framework that allows scientists to quickly see what is working and what is not, and to promote working in teams (which would facilitate code review). A lot of coders and professors I know work as 'lone wolves' - but making code open source and reproducible will require us to help each other, work in teams, and promote a spirit of openness. Right now, no one in my project would have the skills to review my code. I would have to ask other lab members not paid by my project to do the work which is asking for a lot of time, especially since this person would not be familiar with the scientific goals of my model and the questions it is supposed to answer. Reproducibility is incredibly important and I think most people want to improve, but we need to be given the environment where we can make such a time investment. 
+	\item Reduce publication pressure! Quality must come before quantity.
+	\item Code and data publications should be treated as valuable as/equally to papers (including funding opportunities, best practices, peer-review obligation, importance for applications for scholarships/positions).
+	\item funding for staff / coders in addition to funding for scientists.
+	\item increase funding
+	\item Common standards have to be checked regularly. Many manuscripts are published too fast...
+My supervisor (habilitated years ago) often told me to do / code / calculate things I know to be absolutely wrong. I refused to do what he asked, because he did not want to make research reproducible, but to make his papers be published very soon. For him its much more relevant that his studies are published fast, not that their content makes sence and is reproducible. 
+I will leave science as soon as possible - I cannot longer support this.
+	\item Require reproducibility by funding agencies. 
+	\item appreciating formulas within papers more - necessary to increase reproducibility 
+	\item Include software and data reproducibility requirements into funding guidelines of major funding agencies.
+	\item eward more the work that helps achieving reproducibility! for istance at the moment a paper presenting a new, clearer implementation of existing models/methods would have a hard time being published (reviewers would say ""it's not new!"") though it could be very impactful. Whereas a paper presenting a ""new"" model/method, which maybe is only a small incremental addition to an existing one, will be much easier to publish, and even more so if it is coded in a ""new"" package, which however only add to the complexity and fragmentation of the landscape!  
+	\item Value more in CVs as peer revirewed publications code publications, code repositories, documentation writing Provide more founding for this in applied science research poposals. Need to have permanent staff in research institutions to support researcher for code reviewing documenting sharing. 
+	\item Run collective projects trying to reproduce selected studies
+	\item Develop funder requirements that scientific code and data be publicly available.  i.e., treat software similarly to data and technology, with a degree of public accessibility for publicly-funded research, but the opportunity to protect and commercialize resulting IP
+	\item maybe give more credit to work/effort of developing model/code.
+	\item more funding sources to improve reproducibility
+	\item Include/require resources in project/grant proposals for making research reprodicable.
+	\item Funding programs offering more funding to develop software for science. Often there are no good funding options to follow up on code developed as part of science research projects. If funding for software for science were more broadly available could have better maintained, accessible, and usable software.
+	\item There is must be a plateform globally where students from all over the world may interact each other about there similar research projects and this plateform must be supported from professional institutions like in form of scholarships/fellowships etc.
+	\item The most effective measures would be to change the incentives and provide learning opportunities. Currently, the incentive is to publish a lot and not worry about quality/reproducibility. As long as we are measured on how many papers are published in top journals, reproducibility will be at best a low priority. If funding/hiring/promotion is based on quality and reproducibility, then we'll invest in that. Teaching skills like https://software-carpentry.org fills in the gaps to get people to this standard.
+\end{itemize}
+
+\paragraph{Guidelines}
+\begin{itemize}
+	\item My use of code pertains to processing data, modeling (using a mixture of existing modeling programs + my own analyses), and plotting. So, my response here does NOT pertain only to software development, but the full workflow of computational research. That said, what would be helpful to me in making my code more reproducible would be clear and simple guidelines and templates -- for the specific code environment (e.g., R, Python) that I use -- things that REDUCE time and effort on doing reproducible/open research, not things that increase time and effort for me and students.
+\end{itemize}
+
+\paragraph{Other}
+\begin{itemize}
+	\item Hybrid research with computational and data collection/creation and data product production goals... Besides writing papers.... They suffer from time pressure to fulfill ideal standards of documentation and have everything reviewed. Time wise this is not possible and it is a perverse thing to ask to young researchers unless also older PhD thesis requirements are dropped in number of chapters etc. I also think that open data should be 'reviewed by usage', after its publication, and be allowed to be corrected/updated/version managed without having to make a new doi or whatever.. 'living' data or 'living code' (services) is/are more important than published static data and code (archives)
+	\item Publish program in open source code 
+	\item I would love people to point out positive examples of reproducibility. 
+	\item develop slowly an obligation to improve reproducibility
+	\item nothing
+	\item no suggestion
+	\item Not sure
+	\item no ideas
+	\item no ideas
+	\item not idea
+	\item none
+	\item None
+	\item I don't know.
+	\item Open Science 
+	\item not sure
+	\item Make a common aggreement
+	\item Make sure it works as described
+	\item I am not really sure why you think this is necessary
+	\item organize respective hackathons
+	\item Conduct more seminars, webinars, conferences.
+	\item Open Repositories; Foster Open Source as good practice
+	\item Be honest
+	\item Key is to assume very little to no experience when documenting your code. In general, good documentation is key, it is surprising how little it happens.
+	\item We should increase collaboration across all climate/environment/water disciplines and the biggest challenge around me is to learn languages like R, Linux, C++ etc."
+	\item My departement does not have enouhg funding to get enough licenses for non open access software/programming languages such as MATLAB. I believe, however, that producing code or software with open access tools would improve reporducibility as more people would be in a position to actually use, review (and perhaps improve) new and existing tools.
+	\item Quality of code on github is too uneven, some of it first-rate, some of it awful. MATLAB File Exchange is a more reliable venue to look for code about something I work on.
+For reproducibility, I've used Code Ocean and plan to use it again. It establishes not just a place for the code, but also for an environment to run it. Therefore, reviewers can test the code without downloading and installing on their own system.
+(I ran into a problem trying to review some Jupyter notebooks. I found them difficult to install on my system. I'm not a Python expert, so it would have been nicer to have it on Code Ocean.)
+	\item A lot.  It is hard to summarize ideas succinctly in a comment like this, but see 
+https://doi.org/10.1016/j.envsoft.2020.104888
+http://doi.org/10.1016/j.envsoft.2019.03.020
+http://dx.doi.org/10.1016/j.envsoft.2020.104753
+https://doi.org/10.1061/(ASCE)WR.1943-5452.0001215
+	\item Open access code, git versioning, data repository (even included in git LFS), collaborated in a structured agile development workspace
+	\item Publish matehenatical models.
+	\item better document and provide online supportive courses
+	\item Increase human resources dedicated to it publish the code with easy to use licenses.
+	\item Design and manage research projects as real teamwork (not just the loose ?collaboration? where everybody just does their own thing). Teamwork like in Scrum!"
+Most important part in my area is that input data have to become open source!
+	\item From what I understood, for a researcher to be successful, he/she must publish as much new data and answer as much new questions as possible what let no space to test for reproducibility of previous works.
+	\item I have moved into programming in a way that tries to always start from the barebones of the data and maybe hiding sections later but always keeping it in a direct line of order so people can see the transformation of the source data directly before being applied into a model. Rather than transforming and cleaning the data up in one step and then presenting this data because this can cause issues with reproducibility as there will be a raw and cleaned data set but not always a clear distinction on which should be submitted.
+
+\end{itemize}
+
 
 \end{document}
