@@ -3,7 +3,7 @@ Reads in raw data and processes it to a pandas data-frame for plotting and evalu
 '''
 
 # Where to read the data from
-raw_data_path = "LiveData"
+raw_data_path = "data"
 # Strip unnecessary variables
 clean = True
 # Print summary to console?

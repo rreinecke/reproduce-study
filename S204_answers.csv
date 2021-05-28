@@ -364,3 +364,9 @@ Also, I think improving the testing of models should be a focus point. I have th
 na
 "make it compulsory, provide time and money to make computational reserach reprodubile, reward the work"
 "I have found that the codes from the research domains of computer science, electrical engineering, mathematics are easily available on github and hence reproducible. They have simple datasets, unlike earth science papers in which there are lots of variations in the datasets depending upon the geography etc. The earth science papers can be divided into two parts, one includes pure alorithm development and the other as an applications of the developed algorithm."
+Scientific Journals should only accept manuscripts with well-documented workflows/code. Well-documented and well-structured code/workflow requires a lot of time and is barely acknowledged. Most of the times scientiests are evaluated by the number of publications. Code Quality is not considered for evaluation of the scientific work.
+"Additional funding/time for thotrough documentation of code.
+Mandatory publication of codes used for pubilcations.
+"
+practice reproducibility as part of scientific work 
+.
