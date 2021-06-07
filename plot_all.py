@@ -14,7 +14,7 @@ The first half is a collection of helper functions that are used to process the 
 
 
 # Where should the figure be plotted relative to the script?
-d_path= "figs" 
+d_path = "figs"
 
 # Create a folder if it doesn't exist already
 try:
@@ -27,8 +27,8 @@ pd.set_option('display.max_colwidth', None)
 
 
 # String templates to parse them out of the data -> used to explain reproducibility in poll
-explenation_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
-explenation_a_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
+explanation_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
+explanation_a_s = "|We explicitly exclude the retracing of results by means of using a different modeling environment (including variations in model concept, algorithms, input data or methodology).))"
 expl_missing_s = "|TODO defintion.))" 
 expl_soft_s = "|How the software is used, e.g., input format, configuration options, and example problems.))"
 
@@ -140,9 +140,9 @@ def get_demo(data, q):
         date[names[q]] = date[names[q]].map(res)
         # shorten answers -> too long to plot properly
         date.loc[date[names[q]] == "KindOfTasks: I conduct research that improves our process understanding by conducting field or lab experiments."] = "Field/Lab work"
-        date.loc[date[names[q]] == "KindOfTasks: I conduct research by developing and using computational models."] = "Develope and apply models"
+        date.loc[date[names[q]] == "KindOfTasks: I conduct research by developing and using computational models."] = "Develop and apply models"
         date.loc[date[names[q]] == "KindOfTasks: I conduct research by applying computational models without building them myself."] = "Apply models"
-        date.loc[date[names[q]] == "KindOfTasks: I develop computational models but do not conduct any research."] = "Develope models"
+        date.loc[date[names[q]] == "KindOfTasks: I develop computational models but do not conduct any research."] = "Develop models"
         # No answer for " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting" 
         # date.loc[date[names[q]] == " KindOfTasks: I use results of models in my work (e.g., policy, consultation) but do not conduct any research myself."] = "Consulting"
         date.dropna(inplace=True)
@@ -193,7 +193,7 @@ def get_opinion(data, q, withCase = False):
         d.reset_index(level=0, inplace=True)
         df = pd.melt(d, id_vars=['index'], value_vars=cols)
 
-    res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "Helpful Suggestions:", "((", explenation_s, explenation_a_s, expl_missing_s, expl_soft_s])
+    res = get_label_by_names(data, cols, [" Opinion:", "reasons:", "Reproduce?:", "Helpful Suggestions:", "((", explanation_s, explanation_a_s, expl_missing_s, expl_soft_s])
     df["variable"] = df["variable"].map(res)
 
     if q == "O101":
