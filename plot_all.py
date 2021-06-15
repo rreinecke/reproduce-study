@@ -215,6 +215,25 @@ def p_opinion(data):
     #iterate questions of catergory and plot box for each
     for q in names.keys():
         df = get_opinion(data,q)
+
+        # Figure O101 labels cleaning
+        if q == 'O101':
+            df = df.replace({'variable':
+                            {' Most published science in my field is reproducible.': 'Published science is reproducible',
+                             ' In general, reproducibility is a major problem in my field.': 'Reproducibility is a major problem',
+                             ' I believe that we are jeopardizing the trust in our results due to a lack of reproducibility.': 'Lack of reproducibility is jepoardizing trust in results',
+                             ' My own scientific work is reproducible.': 'My own scientific work is reproducible',
+                             ' I am able to comprehend research code of other researchers in my field.': 'I comprehend research code of others',
+                             " I don't need to understand the code of other models; good documentation is sufficient for reproducibility.": 'No need for code understanding; documentation is sufficient',
+                             ' I would be able to teach practices and skills for reproducible science.': 'I can teach reproducible science skills and practices',
+                             ' I would like to make my scientific work more reproducible, but I don?t have the resources.': "Lack of resources for own improvement on reproducibility",
+                             " I would like to make my scientific work more reproducible, but I don't know how.": "Lack of knowledge for own improvment on reproducibilty",
+                             ' I am able to write scientific code.': 'I am able to write scientific code',
+                             ' I am able to write research code that is well structured and documented.': 'I am able to write well structured documented code',
+                             ' Description vs. implementation': 'Description of algorithm equal an implementation'
+                            }
+            })
+
         # calculate the percentage of dont know answers (-1)
         valid_answers_n = df[df.value > 0].groupby('variable').count()
         dontknow_answers_n = df[df.value < 0].groupby('variable').count()
@@ -279,8 +298,16 @@ def p_opinion(data):
             d_tmp = df[df["variable"] == " Funding opportunities"]
             print("Mean of S201: {}".format(d_tmp[d_tmp.value > 0]["value"].mean()))
 
-        plt.figure(figsize=(12, 4))
-        ax = sns.boxplot(y="variable", x="value", data=df[df.value > 0], orient="h")
+        catcounts = df.groupby(['variable', 'value']).count()
+        results = {x: [0, 0, 0, 0, 0, 0, 0] for x in df.variable.unique()}
+        for ix, value in catcounts.iterrows():
+            if ix[1] == -1:
+                cat_ix = 6
+            else:
+                cat_ix = ix[1] -1
+            results[ix[0]][cat_ix] = value[0]
+        survey(results, q)
+        '''ax = sns.boxplot(y="variable", x="value", data=df[df.value > 0], orient="h")
 
         plt.subplots_adjust(left=.6)
         plt.yticks(fontsize=7)
@@ -293,7 +320,55 @@ def p_opinion(data):
                     ha='center', va='center')
         plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
-        ax.figure.clf()
+        ax.figure.clf()'''
+
+def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather disagree',
+                                       'rather agree', 'agree', 'strongly agree', 'dont know']):
+    """
+    Function taken and modified from https://matplotlib.org/stable/gallery/lines_bars_and_markers/
+    horizontal_barchart_distribution.html#sphx-glr-gallery-lines-bars-and-markers-horizontal-barchart-distribution-py
+
+    Parameters
+    ----------
+    results : dict
+        A mapping from question labels to a list of answers per category.
+        It is assumed all lists contain the same number of entries and that
+        it matches the length of *category_names*.
+    category_names : list of str
+        The category labels.
+    """
+    labels = list(results.keys())
+    data = np.array(list(results.values()))
+    data_cum = data.cumsum(axis=1)
+    category_colors = plt.get_cmap('RdYlGn')(
+        np.linspace(0.15, 0.85, data.shape[1]-1))
+    category_colors = np.vstack((category_colors, [0.91, 0.91, 0.91, 1.]))
+
+    fig, ax = plt.subplots(figsize=(16, 5))
+    ax.invert_yaxis()
+    ax.xaxis.set_visible(False)
+    ax.set_xlim(0, np.sum(data, axis=1).max())
+
+    for i, (colname, color) in enumerate(zip(category_names, category_colors)):
+        widths = data[:, i]
+        starts = data_cum[:, i] - widths
+        rects = ax.barh(labels, widths, left=starts, height=0.5,
+                        label=colname, color=color)
+
+        r, g, b, _ = color
+        text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
+        percents = widths / data_cum[:, -1]
+        percentlabels = ['{:.0%}'.format(x) for x in percents]
+        ax.bar_label(rects, labels=percentlabels, label_type='center', color=text_color, fontsize='smaller')
+    ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
+              loc='lower left', fontsize='small')
+
+    plt.tight_layout()
+    ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
+    ax.figure.clf()
+    return fig, ax
+
+
 
 def p_self(data):
     '''
@@ -553,4 +628,4 @@ def all():
     p_self(data)
     p_self2(data)
 
-#all()
+all()
