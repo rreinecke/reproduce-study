@@ -215,6 +215,25 @@ def p_opinion(data):
     #iterate questions of catergory and plot box for each
     for q in names.keys():
         df = get_opinion(data,q)
+
+        # Figure O101 labels cleaning
+        if q == 'O101':
+            df = df.replace({'variable':
+                            {' Most published science in my field is reproducible.': 'Published science is reproducible',
+                             ' In general, reproducibility is a major problem in my field.': 'Reproducibility is a major problem',
+                             ' I believe that we are jeopardizing the trust in our results due to a lack of reproducibility.': 'Lack of reproducibility is jepoardizing trust in results',
+                             ' My own scientific work is reproducible.': 'My own scientific work is reproducible',
+                             ' I am able to comprehend research code of other researchers in my field.': 'I comprehend research code of others',
+                             " I don't need to understand the code of other models; good documentation is sufficient for reproducibility.": 'No need for code understanding; documentation is sufficient',
+                             ' I would be able to teach practices and skills for reproducible science.': 'I can teach reproducible science skills and practices',
+                             ' I would like to make my scientific work more reproducible, but I don?t have the resources.': "Lack of resources for own improvement on reproducibility",
+                             " I would like to make my scientific work more reproducible, but I don't know how.": "Lack of knowledge for own improvment on reproducibilty",
+                             ' I am able to write scientific code.': 'I am able to write scientific code',
+                             ' I am able to write research code that is well structured and documented.': 'I am able to write well structured documented code',
+                             ' Description vs. implementation': 'Description of algorithm equal an implementation'
+                            }
+            })
+
         # calculate the percentage of dont know answers (-1)
         valid_answers_n = df[df.value > 0].groupby('variable').count()
         dontknow_answers_n = df[df.value < 0].groupby('variable').count()
@@ -339,11 +358,12 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
         r, g, b, _ = color
         text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
         percents = widths / data_cum[:, -1]
-        percentlabels = ['{:.1%}'.format(x) for x in percents]
+        percentlabels = ['{:.0%}'.format(x) for x in percents]
         ax.bar_label(rects, labels=percentlabels, label_type='center', color=text_color, fontsize='smaller')
     ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
               loc='lower left', fontsize='small')
 
+    plt.tight_layout()
     ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
     ax.figure.clf()
     return fig, ax
