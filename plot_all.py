@@ -359,6 +359,9 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
         height = 0.85
         if q == 'S201':
             height = 0.5
+        if q == 'O103':
+            height = 0.4
+
         rects = ax1.barh(labels, widths, left=starts, height=height, label=colname, color=color)
 
         r, g, b, _ = color
