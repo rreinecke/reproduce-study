@@ -342,8 +342,7 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
     data_cum = data.cumsum(axis=1)
     # make disagree negative
     data_cum = (data_cum.transpose() - data_cum[:,2]).transpose()
-    category_colors = plt.get_cmap('RdYlGn')(
-        np.linspace(0.15, 0.85, data.shape[1]-1))
+    category_colors = plt.get_cmap('RdYlGn')(np.linspace(0.15, 0.85, data.shape[1]-1))
     category_colors = np.vstack((category_colors, [0.91, 0.91, 0.91, 1.]))
 
     fig, ax1 = plt.subplots(figsize=(16, 6))
@@ -357,19 +356,28 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
         # move dont know to right corner
         if i == 6:
             starts = data_cum[:, -2].max() + 20
-        rects = ax1.barh(labels, widths, left=starts, height=0.75,
-                        label=colname, color=color)
+        height = 0.85
+        if q == 'S201':
+            height = 0.5
+        rects = ax1.barh(labels, widths, left=starts, height=height, label=colname, color=color)
 
         r, g, b, _ = color
-        text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
+        text_color = 'dimgray'
+        #text_color = 'white' if r * g * b < 0.5 else 'dimgray'
         percents = widths / data.sum(axis=1)
-        percentlabels = ['{:.0%}'.format(x) if x >= 0.03 else '' for x in percents]
+        #percentlabels = ['{:.0%}'.format(x) if x >= 0.03 else '' for x in percents]
+        percentlabels = ['{:.0%}'.format(x) for x in percents]
         ax1.bar_label(rects, labels=percentlabels, label_type='center', color=text_color, fontsize='smaller')
-    ax1.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
-              loc='lower left', fontsize='small')
+    
+    ax1.legend(ncol=len(category_names), bbox_to_anchor=(0, 1), loc='lower left', fontsize='small')
+
+    #ax1.set_xlabel("N")
+    sns.despine(trim=True, offset=2)
+    ax1.spines['left'].set_visible(False)
+    plt.tick_params(left=False)
 
     plt.tight_layout()
-    ax1.figure.savefig(d_path + sl + q + ".png", dpi=200)
+    ax1.figure.savefig(d_path + sl + q + ".png", dpi=500)
     # ax.figure.clf()
     return fig, ax1
 
