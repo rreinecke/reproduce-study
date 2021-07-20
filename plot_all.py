@@ -340,33 +340,38 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
     labels = list(results.keys())
     data = np.array(list(results.values()))
     data_cum = data.cumsum(axis=1)
+    # make disagree negative
+    data_cum = (data_cum.transpose() - data_cum[:,2]).transpose()
     category_colors = plt.get_cmap('RdYlGn')(
         np.linspace(0.15, 0.85, data.shape[1]-1))
     category_colors = np.vstack((category_colors, [0.91, 0.91, 0.91, 1.]))
 
-    fig, ax = plt.subplots(figsize=(16, 5))
-    ax.invert_yaxis()
-    ax.xaxis.set_visible(False)
-    ax.set_xlim(0, np.sum(data, axis=1).max())
+    fig, ax1 = plt.subplots(figsize=(16, 6))
+    ax1.invert_yaxis()
+    ax1.xaxis.set_visible(False)
+    ax1.set_xlim((data_cum[:, 0]- data[:,0 ]).min() - 10, (data_cum[:, -2] + data[:, -1]).max() + 30)
 
     for i, (colname, color) in enumerate(zip(category_names, category_colors)):
         widths = data[:, i]
         starts = data_cum[:, i] - widths
-        rects = ax.barh(labels, widths, left=starts, height=0.5,
+        # move dont know to right corner
+        if i == 6:
+            starts = data_cum[:, -2].max() + 20
+        rects = ax1.barh(labels, widths, left=starts, height=0.75,
                         label=colname, color=color)
 
         r, g, b, _ = color
         text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
-        percents = widths / data_cum[:, -1]
-        percentlabels = ['{:.0%}'.format(x) for x in percents]
-        ax.bar_label(rects, labels=percentlabels, label_type='center', color=text_color, fontsize='smaller')
-    ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
+        percents = widths / data.sum(axis=1)
+        percentlabels = ['{:.0%}'.format(x) if x >= 0.03 else '' for x in percents]
+        ax1.bar_label(rects, labels=percentlabels, label_type='center', color=text_color, fontsize='smaller')
+    ax1.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
               loc='lower left', fontsize='small')
 
     plt.tight_layout()
-    ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
-    ax.figure.clf()
-    return fig, ax
+    ax1.figure.savefig(d_path + sl + q + ".png", dpi=200)
+    # ax.figure.clf()
+    return fig, ax1
 
 
 
