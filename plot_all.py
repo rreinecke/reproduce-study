@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 sl = os.path.sep
+import mpl_toolkits.axisartist as axisartist
 
 '''
 Copyright Robert Reinecke
@@ -128,6 +129,10 @@ def get_demo(data, q):
             # manual shorten some names -> too long to plot them properly
             date.loc[date[names[q]] == "Student (undergraduate, Bachelor/Master or similar)"] = "Student (BA/MA)"
             date.loc[date[names[q]] == "Group leader / junior professor"] = "Group leader"
+            t = pd.CategoricalDtype(categories=['Student (BA/MA)', 'PhD candidate', 'Postdoc', 'Group leader',
+                'Associate professor', 'Full professor', 'Scientific staff', 'Other (scientific)', 'Other (non-scientific)'], ordered=True)
+            date['sort'] = pd.Series(date[names[q]], dtype=t)
+            date.sort_values(by=['sort'],inplace=True)
 
     # DM06 and DM07 have labels instead
     if q == "DM06":
@@ -167,12 +172,12 @@ def p_demo(data):
 
     for q in names.keys():  
         date = get_demo(data,q)
-        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="probability")
+        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="count")
 
         sns.despine(trim=True, offset=2);
         plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor")
         plt.subplots_adjust(bottom=.3)
-        ax.set_ylabel("%")
+        ax.set_ylabel("N")
 
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()
@@ -219,18 +224,18 @@ def p_opinion(data):
         # Figure O101 labels cleaning
         if q == 'O101':
             df = df.replace({'variable':
-                            {' Most published science in my field is reproducible.': 'Published science is reproducible',
-                             ' In general, reproducibility is a major problem in my field.': 'Reproducibility is a major problem',
-                             ' I believe that we are jeopardizing the trust in our results due to a lack of reproducibility.': 'Lack of reproducibility is jepoardizing trust in results',
+                            {' Most published science in my field is reproducible.': 'Most published science in my field is reproducible',
+                             ' In general, reproducibility is a major problem in my field.': 'Reproducibility is a major problem in my field',
+                             ' I believe that we are jeopardizing the trust in our results due to a lack of reproducibility.': 'A lack of reproducibility is jepoardizing the trust in our results',
                              ' My own scientific work is reproducible.': 'My own scientific work is reproducible',
                              ' I am able to comprehend research code of other researchers in my field.': 'I comprehend research code of others',
-                             " I don't need to understand the code of other models; good documentation is sufficient for reproducibility.": 'No need for code understanding; documentation is sufficient',
+                             " I don't need to understand the code of other models; good documentation is sufficient for reproducibility.": 'For reproducibility it is not necessary to understand code;\n documentation is sufficient',
                              ' I would be able to teach practices and skills for reproducible science.': 'I can teach reproducible science skills and practices',
-                             ' I would like to make my scientific work more reproducible, but I don?t have the resources.': "Lack of resources for own improvement on reproducibility",
-                             " I would like to make my scientific work more reproducible, but I don't know how.": "Lack of knowledge for own improvment on reproducibilty",
+                             ' I would like to make my scientific work more reproducible, but I don?t have the resources.': "I lack of resources for own improvement on reproducibility",
+                             " I would like to make my scientific work more reproducible, but I don't know how.": "I lack of knowledge for own improvment on reproducibilty",
                              ' I am able to write scientific code.': 'I am able to write scientific code',
-                             ' I am able to write research code that is well structured and documented.': 'I am able to write well structured documented code',
-                             ' Description vs. implementation': 'Description of algorithm equal an implementation'
+                             ' I am able to write research code that is well structured and documented.': 'I am able to write well structured and documented code',
+                             ' Description vs. implementation': 'Description of algorithm is equal \n to its code implementation'
                             }
             })
 
@@ -241,10 +246,26 @@ def p_opinion(data):
                                         left_index=True, right_index=True).fillna(0)
         dont_know_ratio = answers_n_categories.value_y / answers_n_categories.value_x
         
+        if q == "O103":
+            df = df.replace({'variable': 
+                {" because their workflow is poorly documented.": "Worflow is poorly documented",
+                " because their code is poorly documented.": "Code is poorly documented",
+                " because their code is too complex.": "Code is too complex",
+                " because their input data is not openly available.": "Input data is not availble",
+                " because the software/code is not openly available.": "Code is not available",
+                " because the code is written in a language that I wasn?t taught/don?t usually use.": "Code is written \n in a language I don't know"
+                }
+                })
+
+
         if q == "O102": 
             plt.figure(figsize=(12,4))
             plt.yticks(fontsize = 8)
             df["Answer"] = df["value"].map({1:"Yes", 2:"No"})
+            c = df["variable"].unique()
+            for a in c:
+                v = df[df["variable"] == a]["Answer"]
+                print(v.value_counts())
             ax = sns.histplot(y="variable", hue="Answer", data=df, discrete=True, multiple="stack", shrink=.8, linewidth=.8)
             plt.subplots_adjust(left=.5)
             ax.set(ylabel='')
@@ -259,44 +280,18 @@ def p_opinion(data):
             df_fields['DM06'] = df_fields['DM06'].str.replace("Field: ","")
             # 2) get O102 with CASE for join
             df = get_opinion(data, q, withCase = True)
-            df = df.merge(df_fields, on='CASE')
-
-            #df.groupby('DM06').
-            # We need to build our own bar plot here ... no lib supports this properly
-            #bar_width = 0.35
-            #epsilon = .015
-            #line_width = 1
-            #opacity = 0.7
-            #bar_one_pos = np.arange(len(df['DM06'].unique()))
-            #bar_two_pos = bar_one_pos + bar_width
-
-            
-            #bar1 = plt.bar(pos_bar_positions, pos_mut_pcts, bar_width,
-            #                          color='#ED0020',
-            #                          label='HPV+ Mutations')
-            #bar2 = plt.bar(pos_bar_positions, pos_cna_pcts, bar_width-epsilon,
-            #                          bottom=bar1,
-            #                          alpha=opacity,
-            #                          color='white',
-            #                          edgecolor='#ED0020',
-            #                          linewidth=line_width,
-            #                          hatch='//',
-            #                          label='HPV+ CNA')
-            
-            #plt.legend(bbox_to_anchor=(1.1, 1.05))  
-            #sns.despine()  
-            #plt.show()  
-
-
-            #ax.figure.savefig(d_path + sl + q + '_1' + ".png", dpi=200)
-            #ax.figure.clf()
-            #exit()
-                
+            df = df.merge(df_fields, on='CASE')               
             continue
 
         if q == "S201":
             d_tmp = df[df["variable"] == " Funding opportunities"]
             print("Mean of S201: {}".format(d_tmp[d_tmp.value > 0]["value"].mean()))
+            df = df.replace({'variable':
+                {
+                    " University / institutional guidelines or best practices for reproducible research": "Institutional reproducibility guidelines",
+                    " University / institutional guidelines or best practices for licensing and open source": "Institutional Open Source guidelines"
+                }})
+
 
         catcounts = df.groupby(['variable', 'value']).count()
         results = {x: [0, 0, 0, 0, 0, 0, 0] for x in df.variable.unique()}
@@ -306,6 +301,7 @@ def p_opinion(data):
             else:
                 cat_ix = ix[1] -1
             results[ix[0]][cat_ix] = value[0]
+
         survey(results, q)
         '''ax = sns.boxplot(y="variable", x="value", data=df[df.value > 0], orient="h")
 
@@ -340,30 +336,35 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
     labels = list(results.keys())
     data = np.array(list(results.values()))
     data_cum = data.cumsum(axis=1)
-    category_colors = plt.get_cmap('RdYlGn')(
-        np.linspace(0.15, 0.85, data.shape[1]-1))
+    #category_colors = plt.get_cmap('RdYlGn')(np.linspace(0.15, 0.85, data.shape[1]-1)) 
+    category_colors = sns.color_palette("RdYlGn", as_cmap=True)(np.linspace(0, 1, data.shape[1]-1))
+    # add gray to the colors
     category_colors = np.vstack((category_colors, [0.91, 0.91, 0.91, 1.]))
 
-    fig, ax = plt.subplots(figsize=(16, 5))
+    fig, ax = plt.subplots(figsize=(15, 5))
     ax.invert_yaxis()
-    ax.xaxis.set_visible(False)
     ax.set_xlim(0, np.sum(data, axis=1).max())
 
     for i, (colname, color) in enumerate(zip(category_names, category_colors)):
         widths = data[:, i]
         starts = data_cum[:, i] - widths
-        rects = ax.barh(labels, widths, left=starts, height=0.5,
-                        label=colname, color=color)
+        rects = ax.barh(labels, widths, left=starts, height=.9, label=colname, color=color)
 
         r, g, b, _ = color
-        text_color = 'white' if r * g * b < 0.5 else 'darkgrey'
+        text_color = 'white' if r * g * b < 0.5 else 'dimgrey'
         percents = widths / data_cum[:, -1]
         percentlabels = ['{:.0%}'.format(x) for x in percents]
         ax.bar_label(rects, labels=percentlabels, label_type='center', color=text_color, fontsize='smaller')
-    ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
-              loc='lower left', fontsize='small')
 
+    ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1), loc='lower left', fontsize='small')
+    
+    ax.set_xlabel("N")
+    sns.despine(trim=True, offset=2)
     plt.tight_layout()
+
+    ax.spines['left'].set_visible(False)
+    plt.tick_params(left=False)
+
     ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
     ax.figure.clf()
     return fig, ax
@@ -414,10 +415,16 @@ def p_self(data):
             t = pd.CategoricalDtype(categories=['Every day', 'Multiple times per week', 'Once a week', 'Once a month', 'Less than once a month', 'I used to develop software in the past but not anymore.', 'I do not work on code at all.'], ordered=True)
             d['sort'] = pd.Series(d[q], dtype=t)
             d.sort_values(by=['sort'],inplace=True)
+            n = len(d)
+            print("I develop software every day: {}%".format(d[d[q] == 'Every day'].count() / n * 100))
+            print("I develop multiple times a week: {}%".format(d[d[q] == 'Multiple times per week'].count() / n * 100))
         if q == "S113":
             t = pd.CategoricalDtype(categories=['1 day', '1 week', '2-4 weeks', 'up to a year', 'more than a year', 'Does not apply to me'], ordered=True)
             d['sort'] = pd.Series(d[q], dtype=t)
-            d.sort_values(by=['sort'],inplace=True) 
+            d.sort_values(by=['sort'],inplace=True)
+            
+            print("Time to train a student more than year: {}%".format(d[d[q] == 'more than a year'].count() / n * 100))
+            print("Time to train a student up to a year: {}%".format(d[d[q] == 'up to a year'].count() / n * 100))
 
 
         ax = sns.histplot(x=q, data=d, discrete=True, fill=False, stat="probability")
@@ -435,6 +442,10 @@ def p_self(data):
 def p_self2(data):
     names = {'S111': "Which licences you use", 'S112': "Licences you know", 'S101': "What languages", 'S104': "Methods and concepts", 'S105': "Tools", 'S203': "What keeps you",'S106': "Learning"}
 
+    '''
+    !! Some of these questions contain multiple possible answers. Counts of total selected answers may add up to more than the number of participants!
+    '''
+
     def count_occur(data, string, what):
         return data.loc[data[string] == what][string].count()
     
@@ -449,6 +460,7 @@ def p_self2(data):
                 answers = {q: ["Answer provided", "None", "Don't know"], 'val': [d[d["S111s"] != "none"]['S111s'].count(), count_occur(d,"S111s","none"),  count_occur(d,"S111","-1")]}
                 df = pd.DataFrame(answers)
                 f.write("What software licences do you use? Results: {} \n".format(d["S111s"].unique()))
+                print("Percentage of none license usage: {}".format( df[df[q] == "None"]['val'] / len(d["S111s"]) * 100))
 
             if q == "S112":
                 f.write("\\textbf{S112}\n")
@@ -466,6 +478,10 @@ def p_self2(data):
                 res = get_label(data, q, 8, " Licence2:")
                 d_counts = d.drop(['S112','S112_08a'], axis=1)
                 d_counts.columns = [w.replace("Licence2:", "") for w in res.values()]
+                
+
+                n = len(d_counts)
+                
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
                     ans.append(label)
@@ -473,6 +489,10 @@ def p_self2(data):
 
                 answers = {q: ans, 'val': val}
                 df = pd.DataFrame(answers)
+
+                print("Percentage of people that know GNU: {}".format(df[df[q] == ' GNU General Public License (GPL)']['val'] / n * 100))
+                print("Percentage of people that do not know any: {}".format(df[df[q] == "I don't know them at all"]['val'] / n * 100))
+                print("Percentage of people that heard of them: {}".format(df[df[q] == "I have heard of them"]['val'] / n * 100))
 
             if q == "S101":
                 f.write("\\textbf{S101}\n")
@@ -494,6 +514,9 @@ def p_self2(data):
                 res = get_label(data, q, 6, " Programming Languages:")
                 del res[5] # does not exist
                 d_counts = d.drop(['S101','S101_06a'], axis=1)
+                
+                n = len(d_counts)
+                
                 d_counts.columns = [w.replace("Programming Languages:", "") for w in res.values()]
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
@@ -504,6 +527,9 @@ def p_self2(data):
                 val.append(count_occur(d, "S101", -1))
                 answers = {q: ans, 'val': val}
                 df = pd.DataFrame(answers)
+
+                print("Percentage of Python users: {}".format(df[df[q] == ' Python']['val'] / n * 100))
+                print("Percentage of R users: {}".format(df[df[q] == ' R']['val'] / n * 100))
             
             if q == "S104":
                 f.write("\\textbf{S104}\n")
@@ -522,6 +548,11 @@ def p_self2(data):
                 del res[6] # does not exist
                 d_counts = d.drop(['S104','S104_09a'], axis=1)
                 d_counts.columns = [w.replace("Software Development Methods:", "") for w in res.values()]
+                
+
+                n = len(d_counts)
+                
+
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
                     ans.append(label)
@@ -531,6 +562,12 @@ def p_self2(data):
                 val.append(count_occur(d, "S104", -1))
                 answers = {q: ans, 'val': val}
                 df = pd.DataFrame(answers)
+
+                print("Percentage of OO knowledge: {}".format(df[df[q] == ' Object-oriented programming']['val'] / n * 100))
+                print("No knowledge at all: {}".format(df[df[q] == 'None of the above']['val'] / n * 100))
+                print("Pair programming: {}".format(df[df[q] == ' Pair programming']['val'] / n * 100))
+                print("Test-driven: {}".format(df[df[q] == ' Test-driven development']['val'] / n * 100))
+                print("Automated tests: {}".format(df[df[q] == ' Automated Testing']['val'] / n * 100))
 
             if q == "S105":
                 f.write("\\textbf{S105}\n")
@@ -549,6 +586,10 @@ def p_self2(data):
                 res = get_label(data, q, 4, " Software Development Tools:")
                 d_counts = d.drop(['S105','S105_04a'], axis=1)
                 d_counts.columns = [w.replace("Software Development Tools:", "") for w in res.values()]
+                
+
+                n = len(d_counts)
+
                 # iterate possible answers and print number selected
                 for label in d_counts.columns:
                     ans.append(label)
@@ -559,6 +600,10 @@ def p_self2(data):
                 answers = {q: ans, 'val': val}
                 df = pd.DataFrame(answers)
 
+                print("Percentage of tools none : {}".format(df[df[q] == 'None of the above']['val'] / n * 100))
+                print("Percentage of version control: {}".format(df[df[q] == ' Version control such as Git, SVC or similar']['val'] / n * 100))
+                print("Percentage of autodocs: {}".format(df[df[q] == ' Automated documentation such as Docstrings or similar']['val'] / n * 100))
+
             if q == "S106":
                 ans = []
                 val = []
@@ -567,15 +612,16 @@ def p_self2(data):
                 res = get_label(data, q, 6, " Training methods:")
                 d_counts = d.drop(['S106'], axis=1)
                 d_counts.columns = [w.replace("Training methods:", "") for w in res.values()]
+                n = len(d_counts)
                 # iterate possible answers and print number selected 
                 for label in d_counts.columns:
                     ans.append(label)
                     val.append(count_occur(d_counts, label, 2))
-                
                 ans.append("I'm not able to write my own code")
                 val.append(count_occur(d, "S106", -1))
                 answers = {q: ans, 'val': val}
                 df = pd.DataFrame(answers)
+                print("Percentage of autodidacts: {}".format(df[df[q] == ' Self-taught /autodidact']['val'] / n * 100))
 
             if q == "S203":
                 f.write("\\textbf{S203}\n")
@@ -595,6 +641,8 @@ def p_self2(data):
                 del res[9]
                 d_counts = d.drop(['S203','S203_06a'], axis=1)
                 d_counts.columns = [w.replace("Hurdles:", "") for w in res.values()]
+                
+                n = len(d_counts)
                 # iterate possible answers and print number selected 
                 for label in d_counts.columns:
                     ans.append(label)
@@ -610,6 +658,12 @@ def p_self2(data):
                 answers = {q: ans, 'val': val}
                 df = pd.DataFrame(answers)
 
+                print("Percentage of funding as reason: {}".format(df[df[q] == ' Funding']['val'] / n * 100))
+                print("Percentage of complexity as reason: {}".format(df[df[q] == ' Complexity (code too complex, not enough documentation)']['val'] / n * 100))
+                print("Percentage of license as reason: {}".format(df[df[q] == ' Licence (too complex to understand which to pick or restricted by university/intitution)']['val'] / n * 100))
+                print("Percentage of competition as reason: {}".format(df[df[q] == ' Competition (fear to lose lead on other groups)']['val'] / n * 100))
+                print("Percentage other reasons: {}".format(df[df[q] == ' Other']['val'] / n * 100))
+                print("Percentage of publish everything as OS: {}".format(df[df[q] == 'I publish all my code as open source']['val'] / n * 100))
 
             ax = df.plot.bar(x=q, y='val', legend=False)
             plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
