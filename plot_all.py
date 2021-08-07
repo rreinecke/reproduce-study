@@ -172,7 +172,7 @@ def p_demo(data):
 
     for q in names.keys():  
         date = get_demo(data,q)
-        ax = sns.histplot(x=names[q], data=date, discrete=True, fill=False, stat="count")
+        ax = sns.histplot(x=names[q], data=date, discrete=True, stat="count")
 
         sns.despine(trim=True, offset=2);
         plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor")
@@ -266,8 +266,9 @@ def p_opinion(data):
             for a in c:
                 v = df[df["variable"] == a]["Answer"]
                 print(v.value_counts())
+            df = df.replace({'variable':{" I ran somebody else's model in order to replicate and validate their exact results.": "I ran somebody else's model\n in order to replicate and validate\n their exact results.", " I used my own model in order to reproduce similar results to somone else's model.": "I used my own model\n in order to reproduce similar results\n to someone else's model."}})
             ax = sns.histplot(y="variable", hue="Answer", data=df, discrete=True, multiple="stack", shrink=.8, linewidth=.8)
-            plt.subplots_adjust(left=.5)
+            plt.subplots_adjust(left=.3)
             ax.set(ylabel='')
             ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
             ax.figure.clf()
@@ -441,13 +442,13 @@ def p_self(data):
             print("Time to train a student up to a year: {}%".format(d[d[q] == 'up to a year'].count() / n * 100))
 
 
-        ax = sns.histplot(x=q, data=d, discrete=True, fill=False, stat="probability")
+        ax = sns.histplot(x=q, data=d, discrete=True, stat="count")
         sns.despine(trim=True, offset=2);
         plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
         plt.subplots_adjust(bottom=.2)
        
         ax.set_xlabel(names[q]) 
-        ax.set_ylabel("%")
+        ax.set_ylabel("N")
 
         plt.tight_layout()
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
@@ -682,7 +683,7 @@ def p_self2(data):
             ax = df.plot.bar(x=q, y='val', legend=False)
             plt.xticks(rotation=-45, fontsize = 8, ha="left", rotation_mode="anchor") 
             plt.subplots_adjust(bottom=.2)
-            ax.set_ylabel("Count")
+            ax.set_ylabel("N")
 
             plt.tight_layout()
             ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
