@@ -248,7 +248,7 @@ def p_opinion(data):
         
         if q == "O103":
             df = df.replace({'variable': 
-                {" because their workflow is poorly documented.": "Worflow is poorly documented",
+                {" because their workflow is poorly documented.": "Workflow is poorly documented",
                 " because their code is poorly documented.": "Code is poorly documented",
                 " because their code is too complex.": "Code is too complex",
                 " because their input data is not openly available.": "Input data is not availble",
@@ -270,6 +270,8 @@ def p_opinion(data):
             ax = sns.histplot(y="variable", hue="Answer", data=df, discrete=True, multiple="stack", shrink=.8, linewidth=.8)
             plt.subplots_adjust(left=.3)
             ax.set(ylabel='')
+            for label in (ax.get_yticklabels()):
+                label.set_fontsize(13)
             ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
             ax.figure.clf()
 
@@ -378,6 +380,9 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
     #ax1.set_xlabel("N")
     sns.despine(trim=True, offset=2)
     ax1.spines['left'].set_visible(False)
+    #for label in (ax1.get_yticklabels()):
+    #    label.set_fontsize(13)
+
     plt.tick_params(left=False)
     plt.tight_layout()
 
