@@ -231,6 +231,14 @@ def h16(data):
         f.write("\n")
         f.write("Mean agreement - description is same as implementation: {:2f}\n".format(getWithout('O101_17',df))) 
 
+def own_vs_other(data):
+    df = data['data']
+    rep1 = df[df['O101_03'] > 0]['O101_03'] # my own research
+    rep2 = df[df['O101_01'] > 0]['O101_01'] # other research
+    print("Are the distributions of most is reproducible and mine is reproducible the same?")
+    print(stats.ks_2samp(rep1, rep2))
+    print(stats.ttest_ind(rep1, rep2, equal_var=False)) # Welche's ttest
+
 
 def run_all():
     data = pa.read_data()
@@ -240,5 +248,6 @@ def run_all():
     h5(data)
     h14(data)
     h16(data)
+    own_vs_other(data)
 
 #run_all()
