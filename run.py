@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import sys
+assert sys.version_info >= (3, 8)
+
 
 ### Runs the whole processing pipeline ###
 
