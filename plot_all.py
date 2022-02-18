@@ -321,8 +321,7 @@ def p_opinion(data):
         ax.figure.savefig(d_path + sl + q + ".png", dpi=200)
         ax.figure.clf()'''
 
-def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather disagree',
-                                       'rather agree', 'agree', 'strongly agree', 'dont know']):
+def survey(results, q, category_names=["strongly disagree (1)", "2", "3","4","5","strongly agree (6)", "don't know"]):
     """
     Function taken and modified from https://matplotlib.org/stable/gallery/lines_bars_and_markers/
     horizontal_barchart_distribution.html#sphx-glr-gallery-lines-bars-and-markers-horizontal-barchart-distribution-py
@@ -336,6 +335,9 @@ def survey(results, q, category_names=['strongly disagree', 'disagree', 'rather 
     category_names : list of str
         The category labels.
     """
+
+    #Alternative category names instead of numbers
+    category_names_alt=['strongly disagree', 'disagree', 'rather disagree','rather agree', 'agree', 'strongly agree', 'dont know']
     labels = list(results.keys())
     data = np.array(list(results.values()))
     data_cum = data.cumsum(axis=1)
