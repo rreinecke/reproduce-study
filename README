@@ -11,7 +11,7 @@ python3 run.py
 
 ## Data
 
-The raw data can be found in LiveData as .csv files
+The raw data can be found in the data folder as .csv files
 
 ## Prerequisites
 
